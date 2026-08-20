@@ -1,4 +1,14 @@
-# vinext-starter
+# 拉霸戰鬥
+
+瀏覽器單人 Boss 戰。每次拉霸會立即造成傷害或增加護甲，法力可在兩次拉霸之間用來施放技能。
+
+## GitHub Pages
+
+`main` 更新後，GitHub Actions 會執行 `npm run build:pages` 並發布靜態網站。請將儲存庫的 Pages 來源設為 **GitHub Actions**。
+
+https://ginkk07.github.io/slotbattle-web/
+
+## Sites / Vinext 開發
 
 A clean full-stack starter running on
 [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and

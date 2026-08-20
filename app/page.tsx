@@ -259,7 +259,7 @@ function activateSkill(state: GameState, skillId: SkillId): GameState {
   if (skillId === "power-strike") {
     const fireBonus = state.fireTurns > 0 ? 1 : 0;
     const damage = Math.min(state.bossHp, 5 + fireBonus);
-    let next = addLog({
+    const next = addLog({
       ...state,
       bossHp: state.bossHp - damage,
       skillTokens: state.skillTokens - skill.cost,
@@ -338,7 +338,7 @@ export default function Home() {
     }, 675);
   }
 
-  function useSkill(skillId: SkillId) {
+  function castSkill(skillId: SkillId) {
     if (canCommand) setGame((current) => activateSkill(current, skillId));
   }
 
@@ -449,17 +449,17 @@ export default function Home() {
               <article className="skill-card heal">
                 <div className="skill-icon">{SKILLS.heal.icon}</div>
                 <div className="skill-copy"><span>{SKILLS.heal.name}</span><small>{SKILLS.heal.description}</small></div>
-                <button type="button" onClick={() => useSkill("heal")} disabled={!canCommand || game.skillTokens < SKILLS.heal.cost || game.playerHp >= PLAYER_MAX_HP}><b>{SKILLS.heal.cost}</b> 法力</button>
+                <button type="button" onClick={() => castSkill("heal")} disabled={!canCommand || game.skillTokens < SKILLS.heal.cost || game.playerHp >= PLAYER_MAX_HP}><b>{SKILLS.heal.cost}</b> 法力</button>
               </article>
               <article className="skill-card strike">
                 <div className="skill-icon">{SKILLS["power-strike"].icon}</div>
                 <div className="skill-copy"><span>{SKILLS["power-strike"].name}</span><small>{SKILLS["power-strike"].description}</small></div>
-                <button type="button" onClick={() => useSkill("power-strike")} disabled={!canCommand || game.skillTokens < SKILLS["power-strike"].cost}><b>{SKILLS["power-strike"].cost}</b> 法力</button>
+                <button type="button" onClick={() => castSkill("power-strike")} disabled={!canCommand || game.skillTokens < SKILLS["power-strike"].cost}><b>{SKILLS["power-strike"].cost}</b> 法力</button>
               </article>
               <article className={`skill-card fire ${game.fireTurns > 0 ? "is-active" : ""}`}>
                 <div className="skill-icon">{SKILLS["fire-imbue"].icon}</div>
                 <div className="skill-copy"><span>{SKILLS["fire-imbue"].name}</span><small>{game.fireTurns > 0 ? `作用中｜剩餘 ${game.fireTurns} 回合` : SKILLS["fire-imbue"].description}</small></div>
-                <button type="button" onClick={() => useSkill("fire-imbue")} disabled={!canCommand || game.skillTokens < SKILLS["fire-imbue"].cost || game.fireTurns > 0}>{game.fireTurns > 0 ? "作用中" : <><b>{SKILLS["fire-imbue"].cost}</b> 法力</>}</button>
+                <button type="button" onClick={() => castSkill("fire-imbue")} disabled={!canCommand || game.skillTokens < SKILLS["fire-imbue"].cost || game.fireTurns > 0}>{game.fireTurns > 0 ? "作用中" : <><b>{SKILLS["fire-imbue"].cost}</b> 法力</>}</button>
               </article>
             </div>
           </section>
