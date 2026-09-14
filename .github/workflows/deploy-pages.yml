@@ -33,6 +33,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify game and battle UI
+        run: |
+          npm run test:game
+          npm run typecheck:game
+          npm run typecheck:ui
+          npm run test:ui
+
       - name: Build static site
         run: npm run build:pages
 

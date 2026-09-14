@@ -14,6 +14,8 @@
     "test": "npm run test:game && npm run typecheck:game && npm run build && node --test tests/rendered-html.test.mjs",
     "test:game": "node --experimental-strip-types --test tests/game*.test.mjs",
     "typecheck:game": "tsc --project tsconfig.game.json --noEmit --incremental false",
+    "test:ui": "node --test tests/battle-ui.test.mjs",
+    "typecheck:ui": "tsc --project tsconfig.ui.json --noEmit --incremental false",
     "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "bash scripts/sites-env.sh -- drizzle-kit generate"
   },

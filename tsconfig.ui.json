@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false
+  },
+  "include": [
+    "components/battle/BattleView.tsx",
+    "components/battle/Hand.tsx",
+    "components/battle/SlotBoard.tsx",
+    "components/battle/BattleIcon.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "dist-pages",
+    ".next"
+  ]
+}
