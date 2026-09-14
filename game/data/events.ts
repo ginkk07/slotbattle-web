@@ -1,0 +1,450 @@
+import source from "./source-sheet.json" with { type: "json" };
+import type { EventDefinition } from "../adventure/model.ts";
+
+// Original encounter choices and odds, with the current sheet's public text.
+// Source: ginkk07/ROBOT-slotbattle src/game/data/events.js
+const definitions: EventDefinition[] = [
+  {
+    id: 'ruins-mysterious-spring',
+    name: '神秘泉水',
+    rarity: "普通",
+    weight: 100,
+    tags: ['ruins'],
+    description: '你在遺跡深處發現一座清澈的泉水。水面泛著微弱光芒，但你無法判斷這股力量究竟是祝福，還是某種危險的誘惑。',
+    options: [
+      {
+        id: 'drink',
+        label: '飲用泉水',
+        outcomes: [
+          {
+            id: 'restored',
+            type: 'full-heal',
+            weight: 50,
+            text: '泉水入口後，一股溫暖的力量迅速流遍全身。傷口逐漸癒合，原本累積的疲憊也一掃而空。',
+          },
+          {
+            id: 'sealed-skill',
+            type: 'seal-random-skill',
+            weight: 20,
+            text: '泉水的力量在體內失去控制，冰冷的霧氣逐漸籠罩你的記憶。當不適感退去時，某項熟悉的技藝已經變得模糊不清。',
+          },
+          {
+            id: 'restored-elite-approaches',
+            type: 'full-heal-start-combat',
+            rank: 'elite',
+            weight: 20,
+            text: '泉水入口後，一股溫暖的力量迅速流遍全身，你的傷勢也隨之完全恢復。正準備離開時，附近卻傳來沉重的腳步聲。另一個被泉水吸引而來的強大生物，已經發現了你的存在！',
+          },
+          {
+            id: 'quenched',
+            type: 'continue',
+            weight: 10,
+            text: '你喝下泉水，除了稍微解渴以外，身體沒有產生任何變化。',
+          },
+        ],
+      },
+      {
+        id: 'leave',
+        label: '離開泉水',
+        outcomes: [{
+          id: 'left-spring',
+          type: 'continue',
+          weight: 100,
+          text: '你沒有飲用來歷不明的泉水，轉身繼續深入遺跡。',
+        }],
+      },
+    ],
+  },
+  {
+    id: 'ruins-sealed-vault',
+    name: '密封石室',
+    rarity: "稀有",
+    weight: 100,
+    tags: ['ruins'],
+    description: '你發現一間保存完整的密封石室。石門上的封印仍泛著微光，門後不時傳來金屬碰撞的聲響。',
+    options: [
+      {
+        id: 'blood-unseal',
+        label: '以鮮血解除封印',
+        outcomes: [{
+          id: 'blood-unsealed',
+          type: 'blood-unseal',
+          weight: 100,
+          damageMaxHpRatio: 0.5,
+          rewardRarity: 'rare',
+          rewardType: 'equipment',
+          text: '當鮮血滲入刻紋，封印開始逐漸崩解。你忍著生命被抽離的痛楚推開石門，塵封石臺上的裝備也隨之顯露。',
+        }],
+      },
+      {
+        id: 'leave',
+        label: '離開石室',
+        outcomes: [{
+          id: 'left-vault',
+          type: 'continue',
+          weight: 100,
+          text: '你沒有觸碰封印。沉重的石門在身後保持沉默，彷彿什麼都未曾發生。',
+        }],
+      },
+    ],
+  },
+  {
+    id: 'ruins-mysterious-shop',
+    name: '神秘商店',
+    rarity: "普通",
+    weight: 100,
+    tags: ['ruins'],
+    description: '一盞暖黃色的提燈在斷牆後亮起。披著斗篷的商人攤開三件來歷不明的貨物，也表示願意收費強化你已掌握的技能。店內每完成一次交易，下一筆價格都會提高。',
+    options: [
+      {
+        id: 'browse',
+        label: '查看商品',
+        outcomes: [{
+          id: 'shop-opened',
+          type: 'open-shop',
+          weight: 100,
+          text: '商人將三件商品推到你面前，並在價目牌上寫下第一筆交易的價格。',
+        }],
+      },
+      {
+        id: 'leave',
+        label: '直接離開',
+        outcomes: [{
+          id: 'shop-left-without-browsing',
+          type: 'continue',
+          weight: 100,
+          text: '你沒有停下腳步。提燈的光芒很快便消失在身後的黑暗裡。',
+        }],
+      },
+    ],
+  },
+  {
+    id: 'ruins-abandoned-camp',
+    name: '廢棄營地',
+    rarity: "普通",
+    weight: 100,
+    tags: ['ruins'],
+    description: '你在斷牆後發現一座廢棄營地。火堆早已熄滅，但破損的帳篷仍勉強能夠遮蔽風雨。連日的戰鬥讓你感到疲憊，也許可以在這裡休息片刻。',
+    options: [
+      {
+        id: 'rest',
+        label: '留下休息',
+        outcomes: [
+          {
+            id: 'fully-rested',
+            type: 'full-heal',
+            weight: 70,
+            text: '你重新點燃火堆，在微弱的火光旁沉沉睡去。當你再次醒來時，身上的疲憊與傷勢已經完全消失。',
+          },
+          {
+            id: 'ambushed',
+            type: 'start-combat',
+            rank: 'normal',
+            weight: 30,
+            text: '你才剛閉上雙眼，營地外便傳來踩斷枯枝的聲響。黑暗中的腳步正迅速逼近，你立刻握緊武器起身迎戰！',
+          },
+        ],
+      },
+      {
+        id: 'leave',
+        label: '不休息並離開',
+        outcomes: [{
+          id: 'left-abandoned-camp',
+          type: 'continue',
+          weight: 100,
+          text: '你決定不在陌生的營地停留，帶著疲憊繼續前進。身後熄滅的火堆很快便消失在遺跡的陰影中。',
+        }],
+      },
+    ],
+  },
+  {
+    id: 'ruins-disordered-footprints',
+    name: '雜亂的足跡',
+    rarity: "普通",
+    weight: 100,
+    tags: ['ruins'],
+    description: '你在積滿灰塵的地面上發現一串慌亂而凌亂的足跡。足跡一路延伸進遺跡深處，像是有人正被什麼東西追趕。要跟上去看看嗎？',
+    options: [
+      {
+        id: 'follow',
+        label: '跟上足跡',
+        outcomes: [
+          {
+            id: 'found-coins',
+            type: 'gain-gold',
+            weight: 50,
+            gold: { minimum: 20, maximum: 30 },
+            text: '你沿著足跡穿過倒塌的長廊，最後在碎石旁找到一只匆忙遺落的錢袋。',
+          },
+          {
+            id: 'found-monster',
+            type: 'start-combat',
+            rank: 'normal',
+            weight: 50,
+            text: '足跡在一處昏暗轉角突然中斷。你才剛停下腳步，潛伏在陰影裡的怪物便朝你撲來！',
+          },
+        ],
+      },
+      {
+        id: 'leave',
+        label: '不要跟上去',
+        outcomes: [{
+          id: 'left-footprints',
+          type: 'continue',
+          weight: 100,
+          text: '你決定不追查這串可疑的足跡，繞過現場後繼續前進。',
+        }],
+      },
+    ],
+  },
+  {
+    id: 'ruins-aged-explorer',
+    name: '年邁探險家',
+    rarity: "普通",
+    weight: 100,
+    tags: ['ruins'],
+    description: '一名年邁的探險家獨自在遺跡中翻找殘骸。她神情疲憊，坦言急需一筆錢購買補給，並承諾以僅存的魔力回報你的幫助。',
+    options: [
+      {
+        id: 'fund',
+        label: '交付30枚金幣',
+        goldCost: 30,
+        outcomes: [{
+          id: 'received-explorer-blessing',
+          type: 'grant-next-battle-status',
+          statusId: 'attack-up-3',
+          duration: 9,
+          stacks: 1,
+          potency: 1,
+          weight: 100,
+          text: '老探險家收下金幣，將手掌覆在你的武器上。溫暖的光芒沿著刃鋒流動，這份強化會在下一場戰鬥中持續9回合。',
+        }],
+      },
+      {
+        id: 'leave',
+        label: '婉拒並離開',
+        outcomes: [{
+          id: 'left-explorer',
+          type: 'continue',
+          weight: 100,
+          text: '你無法分出金幣，只能向老探險家道別，繼續自己的旅程。',
+        }],
+      },
+    ],
+  },
+  {
+    id: 'ruins-ornate-chest',
+    name: '華麗的寶箱',
+    rarity: "稀有",
+    weight: 100,
+    tags: ['ruins'],
+    description: '一只鑲滿寶石的華麗寶箱靜靜擺在房間中央。它看起來價值不菲，裡面想必藏著相當不錯的道具。',
+    options: [
+      {
+        id: 'open',
+        label: '打開寶箱',
+        outcomes: [
+          {
+            id: 'found-item',
+            type: 'grant-random-reward',
+            lootTableId: 'ruins-ornate-chest-item',
+            weight: 20,
+            text: '箱蓋開啟後，一件保存完好的物品映入眼簾。',
+          },
+          {
+            id: 'mimic-attack',
+            type: 'start-combat',
+            unitId: 'ruins-mimic',
+            rank: 'elite',
+            weight: 60,
+            text: '你的手才剛碰上箱蓋，寶箱便猛然張開滿是利齒的巨口！這根本不是寶箱，而是一頭等待獵物上鉤的寶箱怪！',
+          },
+          {
+            id: 'found-skill-scroll',
+            type: 'grant-random-reward',
+            lootTableId: 'ruins-ornate-chest-skill',
+            weight: 20,
+            text: '箱內沒有金銀財寶，只有一卷仍散發魔力的技能卷軸。當你攤開卷軸，記載其中的技藝立即湧入腦海。',
+          },
+        ],
+      },
+      {
+        id: 'leave',
+        label: '不碰寶箱',
+        outcomes: [{
+          id: 'left-ornate-chest',
+          type: 'continue',
+          weight: 100,
+          text: '你壓下對寶物的好奇，沒有碰觸這只過於顯眼的寶箱。',
+        }],
+      },
+    ],
+  },
+  {
+    id: 'ruins-ancient-echo',
+    name: '遠古回響',
+    rarity: "傳說",
+    weight: 100,
+    tags: ['ruins'],
+    description: '一道不屬於任何生者的低語在遺跡深處迴盪。那些難以理解的聲音逐漸侵入你的意識，似乎正在尋找可以寄宿的軀體。',
+    options: [
+      {
+        id: 'accept',
+        label: '接受回響',
+        outcomes: [{
+          id: 'accepted-echo',
+          type: 'reduce-max-hp-upgrade-skill',
+          weight: 100,
+          maxHpRatio: 0.8,
+          text: '你放棄抵抗，任由遠古的聲音刻入身體。部分生命隨著回響逐漸消逝，但一項熟悉的技藝也開始產生變化。',
+        }],
+      },
+      {
+        id: 'resist',
+        label: '反抗回響',
+        outcomes: [{
+          id: 'resisted-echo',
+          type: 'start-combat',
+          rank: 'elite',
+          weight: 100,
+          text: '你以意志強行撕裂侵入腦海的低語。四周的陰影受到回響牽引，逐漸凝聚成一名遠古守衛，擋住了你的去路！',
+        }],
+      },
+      {
+        id: 'leave',
+        label: '切斷聯繫',
+        outcomes: [{
+          id: 'rejected-echo',
+          type: 'continue',
+          weight: 100,
+          text: '你封閉感知，切斷自己與回響之間的聯繫。低語逐漸消失在遺跡深處，你也毫髮無傷地離開了此處。',
+        }],
+      },
+    ],
+  },
+  {
+    id: 'ruins-treasure-blacksmith',
+    name: '尋寶中的鐵匠',
+    rarity: "普通",
+    weight: 100,
+    tags: ['ruins'],
+    requirements: { upgradableEquipment: true },
+    description: '你在遺跡中遇見一名正在尋寶的鐵匠。他檢查了你的武器，似乎很快就看出了能夠改進的地方；可惜，他隨身攜帶的工具早已在探索途中遺失。\n\n「給我20枚金幣，我可以利用這裡的材料試著強化一件武器。不過沒有合適的工具，成功率只有六成。如果你願意提供一塊磨刀石，我就能保證完成。」',
+    options: [
+      {
+        id: 'forge-risky',
+        label: '支付20枚金幣',
+        goldCost: 20,
+        outcomes: [{
+          id: 'weapon-upgrade-roll',
+          type: 'begin-weapon-upgrade',
+          weight: 100,
+          successChance: 0.6,
+          text: '「選一件武器交給我吧。決定之後，可就不能反悔了。」',
+        }],
+      },
+      {
+        id: 'forge-guaranteed',
+        label: '交付磨刀石與20枚金幣',
+        goldCost: 20,
+        itemCost: { itemId: 'whetstone', quantity: 1 },
+        outcomes: [{
+          id: 'weapon-upgrade-guaranteed',
+          type: 'begin-weapon-upgrade',
+          weight: 100,
+          successChance: 1,
+          text: '鐵匠接過磨刀石，臉上的神情頓時變得自信許多。\n「有這個就足夠了。接下來交給我吧。」\n\n「選一件武器交給我吧。決定之後，可就不能反悔了。」',
+        }],
+      },
+      {
+        id: 'leave',
+        label: '拒絕並離開',
+        outcomes: [{
+          id: 'blacksmith-left',
+          type: 'continue',
+          weight: 100,
+          text: '你決定保留手上的資源，拒絕了鐵匠的提議。\n「沒關係。要是改變主意，就祈禱我們還能再碰面吧。」\n\n你離開鐵匠，繼續探索遺跡。',
+        }],
+      },
+    ],
+  },
+  {
+    id: 'ruins-adventurer-corpse',
+    name: '冒險者屍體',
+    rarity: "普通",
+    weight: 100,
+    tags: ['ruins'],
+    description: '你在道路旁發現一具冒險者的屍體。\n\n盔甲上留有新鮮的爪痕，周圍卻沒有看見襲擊者的蹤影。屍體的行囊似乎還沒被人動過，身上或許留有一些能用的物資。',
+    options: [
+      {
+        id: 'search',
+        label: '搜刮屍體',
+        outcomes: [{
+          id: 'corpse-search-started',
+          type: 'search-adventurer-corpse',
+          weight: 100,
+          lootWeights: { consumable: 30, weapon: 10, gold: 60 },
+          gold: { minimum: 10, maximum: 40 },
+          eliteChances: [0.25, 0.5, 0.75],
+          text: '搜尋屍體上的財物，但可能引來魔物的注意。',
+        }],
+      },
+      {
+        id: 'leave',
+        label: '離開',
+        outcomes: [{
+          id: 'corpse-left',
+          type: 'continue',
+          weight: 100,
+          text: '你決定不再冒險，沒有碰觸屍體便轉身離開。身後依然一片寂靜，但你總覺得有什麼東西正在暗處注視著你。',
+        }],
+      },
+    ],
+  },
+  {
+    id: 'ruins-mysterious-collector',
+    name: '神秘收藏家',
+    rarity: "傳說",
+    weight: 100,
+    tags: ['ruins'],
+    description: '你在遺跡深處遇見一名戴著銀色面具的收藏家。他的身旁擺著一只刻滿符文的魔導轉輪匣，匣中陳列著一件傳說裝備，另一側則封存著一段失傳的技藝。「選一樣你想要的，再拿你的一項技能作為賭注。四次轉動之內，讓三枚符文排列一致，它就是你的。」',
+    options: [
+      {
+        id: 'challenge-skill',
+        label: '挑戰傳說技能',
+        outcomes: [{
+          id: 'collector-skill-challenge',
+          type: 'collector-challenge',
+          rewardType: 'skill',
+          weight: 100,
+          text: '收藏家向你展示了一項失傳的傳說技能。請選擇一項現有技能作為賭注。',
+        }],
+      },
+      {
+        id: 'challenge-item',
+        label: '挑戰傳說裝備',
+        outcomes: [{
+          id: 'collector-item-challenge',
+          type: 'collector-challenge',
+          rewardType: 'equipment',
+          weight: 100,
+          text: '收藏家向你展示了一件傳說裝備。請選擇一項現有技能作為賭注。',
+        }],
+      },
+      {
+        id: 'leave',
+        label: '拒絕賭局',
+        outcomes: [{
+          id: 'collector-left',
+          type: 'continue',
+          weight: 100,
+          text: '你拒絕拿自己的技藝下注。收藏家沒有挽留，只是收起魔導轉輪匣，無聲地消失在遺跡深處。',
+        }],
+      },
+    ],
+  },
+];
+export const events: Record<string, EventDefinition> = Object.fromEntries(definitions.map((definition) => {
+  const row = source.sheets.奇遇.values.find((entry) => entry[2] === definition.id);
+  return [definition.id, { ...definition, name: row?.[1] ?? definition.name, description: row?.[7] ?? definition.description }];
+}));

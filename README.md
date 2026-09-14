@@ -1,117 +1,63 @@
-# 拉霸戰鬥
+# 拉霸 Battle
 
-瀏覽器單人 Boss 戰。每次拉霸會立即造成傷害或增加護甲，法力可在兩次拉霸之間用來施放技能。
+3×3 拉霸卡片戰鬥與遺跡冒險。免費盤面產生八張卡片；出牌取得攻防，使用技能則消耗卡片。玩家可多次操作，結束回合前用剩餘 AP 保留手牌，再一次結算戰鬥傷害。
 
-## GitHub Pages
+## 已實作
 
-`main` 更新後，GitHub Actions 會執行 `npm run build:pages` 並發布靜態網站。請將儲存庫的 Pages 來源設為 **GitHub Actions**。
+- 基礎 3 AP；鎖欄當下扣 AP、重轉後維持鎖定；權重按實際總和抽選。
+- 1／3／9 牌面結果、🍀萬用、三骷髏卡逐張扣下回合 AP。
+- 主動點選技能與材料判定，明寫 `>= / <= / = / > / <`；多張材料及不同卡槽配對。
+- 傷害池依玩家操作順序即時加減乘算；戰鬥、額外、燃燒、反射、詛咒分開計算。
+- 每次傷害死亡判定、詛咒共同判死、群體與單體目標順序、有限回合狀態及護甲保留。
+- 10 招技能、40 件裝備、5 種消耗品與 7 種怪物資料；草案怪物僅供測試。
+- 普通冒險：起始配置 → 戰鬥 → 金幣與戰利品 → 探索／奇遇 → Boss → 下一層。
+- 11 項奇遇，包含商店、鐵匠、收藏家、泉水、寶箱、屍體搜刮等完整互動。
+- 收藏家實際四次轉動，下注不自轉，鎖格不消耗次數。
+- 瀏覽器本機自動續玩；獨立戰鬥測試配置可自由搭配技能、裝備與多個敵人。
 
-https://ginkk07.github.io/slotbattle-web/
+中毒、毒素傷害與再生仍是草案，不啟用未定義效果。Google Apps Script 帳號、跨裝置存檔與 Discord 互動層尚未接入；此專案是網頁遊戲。
 
-## Sites / Vinext 開發
+## 架構與內容修改
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+詳細時序、傷害規則、條件格式、資料來源及擴充範例見 [新版遊戲開發規範](docs/game-development.md)。
 
-## Prerequisites
+| 位置 | 用途 |
+| --- | --- |
+| `game/data/` | 內容目錄、試算表快照、抽選與探索設定 |
+| `game/battle.ts`、`runtime.ts`、`effects.ts` | 交易式指令、事件與效果處理器 |
+| `game/damage.ts`、`targeting.ts` | 傷害階段及單位目標排序 |
+| `game/cards.ts`、`conditions.ts` | 牌面與技能材料判定 |
+| `game/adventure/` | 探索生命週期、獎勵、事件、收藏家及存檔介面 |
+| `components/battle/` | 遊戲畫面；只發出指令，不直接修改數值 |
+| `app/page.tsx` | 冒險／戰鬥模式及本機儲存的接合層 |
+| `tests/game*.test.mjs` | 規則、裝備組合、資料擴充及探索回歸測試 |
 
-- Node.js `>=22.13.0`
-- Linux with `flock`, `curl`, and GNU `timeout`
+新增技能／裝備優先組合現有 `Effect`、`Hook`、`Modifier`；新增真正不同的機制時才註冊新處理器，不能在 UI 或主回合函式中依物品 ID 寫分支。
 
-## Sites Lifecycle
+試算表快照日期為 **2026-09-11**，不是執行時自動同步。修改文案、條件或數值時，須一起核對程式效果；更改會影響存檔重播的規則時，更新存檔版本或提供遷移。
 
-The Sites lifecycle CLI runs the locked dependency install before returning this checkout. Edit the source under `app/`, then checkpoint when a coherent milestone is ready to inspect or share. The remote Sites builder runs `npm run build` against the pushed commit. Do not repeat install or build as a normal pre-checkpoint step.
+## 開發與驗證
 
-This starter does not use `wrangler.jsonc`.
+需要 Node.js 22.13 以上，以及現有專案腳本使用的 Bash、GNU timeout 等 Linux 工具。
 
-`install:ci` is intentionally a single, non-retrying `npm ci`. It refuses a concurrent install for the same project, consumes a matching image-seeded npm cache with `--prefer-offline` while retaining registry fallback for a missing cache object, otherwise downloads and verifies the complete vinext tarball recorded in `package-lock.json`, limits npm to one socket, and terminates a stalled install. `build` applies a short timeout. These helpers target Linux and use GNU `timeout`; they are not native macOS scripts.
-
-Scripts that need writable project-scoped home, npm, XDG, and temporary paths use `scripts/sites-env.sh`. The `dev` and `start` scripts honor the caller's runtime environment and keep Wrangler logs inside the checkout. The generated `.sites-runtime/` directory is disposable and ignored by Git.
-
-## Included Shape
-
-- edit site code under `app/`
-- `app/chatgpt-auth.ts` provides optional dispatch-owned ChatGPT sign-in helpers
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/index.ts` reads the D1 binding from the Cloudflare Worker environment
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```sh
+npm run dev
+npm run test:game
+npm run typecheck:game
+npm test
+npm run build:pages
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+- `test:game`：67 項規則、探索與動畫快照測試。
+- `npm test`：上述測試、型別檢查、完整建置及 HTTP 渲染驗證。
+- `build:pages`：產生 `dist-pages/` 靜態網站。
+- `build`：現有 Vinext Worker 建置；`start` 啟動建置後的程式。
+- `install:ci`：依鎖定版本安裝依賴；不需為一般程式修改重複安裝。
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+目前已驗證規則、型別、建置及瀏覽器中的直式戰鬥操作（鎖欄、技能材料、批次出牌、保留與多敵人動畫）；未進行實機手機觸控或長時間平衡測試。
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
+## 發布
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
+GitHub Pages 使用 `.github/workflows/` 內的既有工作流程，`main` 更新後建置及發布，網站路徑為 `/slotbattle-web/`。
 
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
-
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
-
-## Diagnostic Commands
-
-- `npm run install:ci`: perform the one bounded lockfile install
-- `npm run dev`: start the Vite/Vinext development server
-- `npm run build`: build the deployable Sites artifact
-- `npm run start`: start the built Vinext application
-- `npm test`: build and verify the rendered development-preview metadata
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-Use build commands for targeted diagnosis after a remote failure, not as part of the normal checkpoint path.
-
-The timeout defaults can be overridden for a controlled canary with `SITES_INSTALL_TIMEOUT`, `SITES_INSTALL_KILL_AFTER`, `SITES_BUILD_TIMEOUT`, and `SITES_BUILD_KILL_AFTER`. A timeout fails the command; the helpers never retry an unchanged install or build.
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+現有 Sites 身分保存在 `.openai/hosting.json`，沿用同一 Site 即可。依原專案的來源與建置流程發布；不可在同一次更新中建立替代 Site 或覆寫使用者的其他專案。

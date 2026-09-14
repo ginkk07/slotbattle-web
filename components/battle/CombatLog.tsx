@@ -1,0 +1,5 @@
+import type { Battle } from "../../game/model.ts";
+const damageNames = { battle: "戰鬥", extra: "額外", burn: "燃燒", reflection: "反射", curse: "詛咒", poison: "毒素" };
+export function CombatLog({ state }: { state: Battle }) {
+  return <section className="combat-log panel"><div className="section-heading"><h2>戰鬥紀錄</h2><span>最近動作</span></div><ol aria-live="polite" aria-relevant="additions">{state.logs.slice(-14).reverse().map((entry) => <li key={entry.id} className={`log-${entry.tone}`}><span>R{entry.round}</span><p>{entry.text}</p></li>)}</ol><details className="damage-detail"><summary>傷害明細 · {state.damage.length} 筆</summary><div className="table-scroll"><table><thead><tr><th>回合</th><th>來源</th><th>類型</th><th>原始</th><th>護甲後</th><th>百分比後</th><th>固定後</th><th>生命傷害</th><th>溢出</th></tr></thead><tbody>{state.damage.slice(-30).map((entry) => <tr key={entry.id}><td>{entry.round}</td><td>{entry.label}</td><td>{damageNames[entry.type]}</td><td>{entry.raw}</td><td>{entry.afterArmor}</td><td>{entry.afterPercent}</td><td>{entry.afterFixed}</td><td>{entry.hpDamage}</td><td>{entry.overkill}</td></tr>)}</tbody></table></div></details></section>;
+}

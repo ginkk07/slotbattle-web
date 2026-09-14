@@ -3,11 +3,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://slot-battle.qaws936936.chatgpt.site"),
-  title: "拉霸戰鬥｜瀏覽器單人 Boss 戰",
-  description: "每次拉霸立即攻擊或疊甲，累積法力並在回合中自由施放三種技能，擊破遺跡守衛。",
+  title: "拉霸 Battle｜3×3 卡片戰鬥",
+  description: "九格拉霸生成卡片，出牌累積攻防、消耗卡片使用技能，並以剩餘 AP 保留手牌。",
   openGraph: {
     title: "拉霸戰鬥",
-    description: "即時攻擊、疊甲與技能決策，擊破遺跡守衛。",
+    description: "拉霸取得卡片，出牌、施放技能、保留手牌，探索遺跡與奇遇。",
     url: "/",
     siteName: "拉霸戰鬥",
     locale: "zh_TW",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "拉霸戰鬥",
-    description: "即時攻擊、疊甲與技能決策，擊破遺跡守衛。",
+    description: "拉霸取得卡片，出牌、施放技能、保留手牌，探索遺跡與奇遇。",
     images: ["/og.png"],
   },
   icons: {

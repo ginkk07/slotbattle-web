@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["game/**/*.ts", "components/battle/**/*.tsx", "app/page.tsx", "app/layout.tsx", "pages/**/*.tsx"],
+  "exclude": ["node_modules", "dist", "dist-pages"]
+}
