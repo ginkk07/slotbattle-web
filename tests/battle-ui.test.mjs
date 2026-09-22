@@ -78,7 +78,7 @@ test("cursed cards stay disabled and explain the AP penalty", () => {
   const html = render(Hand, handProps([card("curse", ["skull", "skull", "skull"])]));
   assert.match(buttons(html)[0], /disabled=""/u);
   assert.match(html, /詛咒卡不能使用，下回合 AP 減 1/u);
-  assert.match(html, /下回合 AP −1/u);
+  assert.doesNotMatch(html, /class="card-score"/u);
 });
 
 test("expired retention cards cannot be retained but remain playable this round", () => {
@@ -96,11 +96,11 @@ test("future retention cards remain enabled and a locked hand disables all cards
   assert.match(buttons(render(Hand, handProps(cards, { disabled: true })))[0], /disabled=""/u);
 });
 
-test("skill material mode has a distinct accessible label and footer", () => {
+test("skill material mode keeps its accessible label without visible card text", () => {
   const html = render(Hand, handProps([card("material", ["star", "star", "star"])], { material: true }));
   assert.match(html, /選擇技能卡片/u);
   assert.match(html, /技能素材/u);
-  assert.doesNotMatch(html, /class="card-attack"/u);
+  assert.doesNotMatch(html, /class="card-origin"|class="card-score"/u);
 });
 
 test("symbol art is decorative and every current skill has an icon", () => {
@@ -129,7 +129,9 @@ test("card phase keeps skill availability, hand selection and end-turn controls"
   state.hand = [card("one", ["attack", "attack", "attack"])];
   state.sealedSkills = ["power-strike"];
   const html = render(BattleView, battleProps(state));
-  assert.match(html, /class="skill-medallion"/u);
+  assert.doesNotMatch(html, /class="skill-medallion"/u);
+  assert.match(html, /class="skill-name">強擊/u);
+  assert.doesNotMatch(html, /class="card-origin"|class="card-score"/u);
   assert.match(buttonWith(html, 'aria-label="強擊'), /disabled=""/u);
   assert.doesNotMatch(buttonWith(html, 'aria-label="治癒'), /disabled=""/u);
   assert.match(buttonWith(html, "出牌"), /disabled=""/u);

@@ -1,5 +1,5 @@
 /*
- * Battle UI foundation: ivory cards, celestial medallions and navy/gold controls.
+ * Battle UI foundation: ivory cards, text skills and navy/gold controls.
  * Scoped to the lower battle interface; arena, characters and opening stay intact.
  */
 .battle-screen {
@@ -79,41 +79,19 @@
 }
 .battle-screen .decision-panel { padding: 12px 14px 18px; }
 
-/* Skills use a medallion silhouette, not another row of rectangular cards. */
-.battle-screen .skill-tray { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(88px, 1fr); gap: 8px; margin: 0 0 12px; padding: 7px 5px 12px; border-bottom: 1px solid var(--ui-line); overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: #c9b28450 transparent; }
+/* Skills are text controls in a separate horizontal strip. */
+.battle-screen .skill-tray { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(116px, 1fr); gap: 8px; margin: 0 0 12px; padding: 6px 4px 10px; border-bottom: 1px solid var(--ui-line); overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; }
+.battle-screen .skill-tray::-webkit-scrollbar { display: none; }
 .battle-screen .skill-tile {
-  --skill-tone: #ddc490;
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 5px;
-  min-height: 102px; padding: 4px 2px; scroll-snap-align: center; border: 0; border-radius: 8px;
-  background: transparent; box-shadow: none; text-align: center;
+  display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 4px;
+  min-height: 58px; padding: 9px 12px; scroll-snap-align: start; border: 1px solid var(--ui-line); border-radius: 4px 10px 4px 10px;
+  background: linear-gradient(145deg, #243249, #18243a); box-shadow: inset 0 1px 0 #fff1; text-align: left;
 }
-.battle-screen .skill-heal { --skill-tone: #b4d9c1; }
-.battle-screen .skill-defense { --skill-tone: #b5ccdf; }
-.battle-screen .skill-flame { --skill-tone: #e2ac8b; }
-.battle-screen .skill-star { --skill-tone: #cabee9; }
 .battle-screen .skill-tile > span { display: block; }
-.battle-screen .skill-tile .skill-medallion {
-  position: relative; display: grid; place-items: center; width: 56px; height: 56px; flex-shrink: 0;
-  border: 1px solid var(--skill-tone); border-radius: 50%; color: var(--skill-tone);
-  background: radial-gradient(circle at 40% 25%, #6973866b, #17233a 72%);
-  box-shadow: 0 0 0 3px #cfbd9412, inset 0 0 14px #0005, 0 5px 9px #0003;
-  transition: transform .18s, box-shadow .18s, background .18s;
-}
-.battle-screen .skill-medallion::before { content: ""; position: absolute; inset: 4px; border: 1px solid #dcc59345; border-radius: 50%; pointer-events: none; }
-.battle-screen .skill-medallion > .battle-icon { width: 30px; height: 30px; filter: drop-shadow(0 1px 2px #0005); }
-.battle-screen .skill-medallion .skill-level {
-  position: absolute; bottom: -3px; right: -2px; display: grid; place-items: center;
-  width: 19px; height: 19px; border: 1px solid #d4bb82; border-radius: 50%;
-  background: #233047; color: var(--ui-ivory); font: 400 .65rem/1 Georgia, serif;
-}
-.battle-screen .skill-level .battle-icon { width: 12px; height: 12px; }
-.battle-screen .skill-tile .skill-name { margin-top: 3px; font: 600 .8rem/1.35 var(--ui-serif); color: var(--ui-text); overflow-wrap: anywhere; }
-.battle-screen .skill-tile .skill-condition { font: 400 .65rem/1.45 sans-serif; color: var(--ui-muted); overflow-wrap: anywhere; }
-.battle-screen .skill-tile:not(:disabled):hover { background: #f7e1b306; box-shadow: none; }
-.battle-screen .skill-tile:not(:disabled):hover .skill-medallion { transform: translateY(-2px); box-shadow: 0 0 0 3px #cfbd9420, 0 0 16px #d6bf8530; }
-.battle-screen .skill-tile.active { background: transparent; box-shadow: none; }
-.battle-screen .skill-tile.active .skill-medallion { color: #3b4352; border-color: #fff0c7; background: radial-gradient(circle at 35% 25%, #fff6dc, #d3b87e); box-shadow: 0 0 0 3px #e9d29740, 0 0 22px #e8cd7959; }
-.battle-screen .skill-tile.active .skill-medallion::before { border-color: #6b60354d; }
+.battle-screen .skill-tile .skill-name { font: 600 .86rem/1.35 var(--ui-serif); color: var(--ui-text); overflow-wrap: anywhere; }
+.battle-screen .skill-tile .skill-condition { font: 400 .68rem/1.45 sans-serif; color: var(--ui-muted); overflow-wrap: anywhere; }
+.battle-screen .skill-tile:not(:disabled):hover { border-color: #d9c18b99; background: linear-gradient(145deg, #2b3a52, #1c2940); }
+.battle-screen .skill-tile.active { border-color: #e3c985; background: linear-gradient(145deg, #3a4555, #28354a); box-shadow: inset 3px 0 0 #e2c479, 0 0 14px #d4b86c22; }
 .battle-screen .skill-tile.active .skill-name { color: var(--ui-gold-bright); }
 .battle-screen .skill-empty { grid-column: 1 / -1; text-align: center; padding: 10px; }
 
@@ -134,7 +112,7 @@
 }
 .battle-screen .hand-grid::-webkit-scrollbar { display: none; }
 .battle-screen .hand-card {
-  position: relative; isolation: isolate; min-height: 0; aspect-ratio: 941 / 1672; padding: 12px 11px 10px;
+  position: relative; isolation: isolate; min-height: 0; aspect-ratio: 941 / 1672; padding: 8px;
   scroll-snap-align: start; border: 0; border-radius: 7px;
   background: transparent; color: #354150;
   box-shadow: 0 3px 0 #8c7e5f, 0 6px 10px #0004; transform: translateY(0);
@@ -144,25 +122,12 @@
 .battle-screen .hand-card.selected { border-color: #fff3c7; box-shadow: 0 0 0 2px #ddbd75, 0 4px 0 #8d7545, 0 0 20px #e8c77e40; transform: translateY(-4px); }
 .battle-screen .hand-card.selected:not(:disabled):hover { transform: translateY(-4px); }
 .battle-screen .hand-card:not(:disabled):active { transform: translateY(0); }
-.battle-screen .hand-card .card-origin { align-items: center; gap: 3px; font: 400 .6rem/1.3 sans-serif; color: #70664f; }
-.battle-screen .hand-card .origin-label { max-width: calc(100% - 17px); }
-.battle-screen .hand-card .selection-mark { display: grid; place-items: center; width: 14px; height: 14px; border: 1px solid #9f8b6270; border-radius: 50%; background: transparent; color: #fff7e0; }
-.battle-screen .hand-card .selection-mark .battle-icon { width: 11px; height: 11px; stroke-width: 2.6; }
-.battle-screen .hand-card.selected .selection-mark { background: #8b713d; border-color: #8b713d; }
-.battle-screen .hand-card .card-symbols { flex: 1; flex-direction: column; gap: 6px; min-height: 0; padding: 4px 0; }
-.battle-screen .card-symbols > img { width: 34px; height: 34px; flex: 0 0 34px; object-fit: contain; }
-.battle-screen .hand-card .card-score { min-height: 26px; align-items: center; border-top: 1px solid #99835238; padding-top: 4px; color: #4e5460; font: 400 1rem/1.1 Georgia, serif; }
-.battle-screen .card-score > span { display: inline-flex; align-items: center; gap: 2px; }
-.battle-screen .card-score .battle-icon { width: 13px; height: 13px; }
-.battle-screen .card-score .card-attack { color: #775941; }
-.battle-screen .card-score .card-armor { color: #496b83; }
-.battle-screen .card-score .card-state { width: 100%; justify-content: center; font: 500 .6rem/1.4 sans-serif; text-align: center; }
+.battle-screen .hand-card .card-symbols { height: 100%; flex-direction: column; justify-content: center; gap: 7px; min-height: 0; padding: 10px 0; }
+.battle-screen .card-symbols > img { width: 48px; height: 48px; flex: 0 0 48px; object-fit: contain; }
 .battle-screen .hand-card:disabled { opacity: .58; }
 .battle-screen .hand-card.cursed { opacity: .9; background: linear-gradient(145deg, #454450, #292d40); border-color: #9d8493; box-shadow: 0 3px 0 #191d2e; }
 .battle-screen .hand-card.cursed .card-base-art { filter: brightness(.42) saturate(.5); }
 .battle-screen .hand-card.cursed::before { border-color: #c2a4b33b; }
-.battle-screen .hand-card.cursed :is(.card-origin, .card-score, .battle-icon) { color: #ddbfce; }
-.battle-screen .hand-card.expired .selection-mark { color: #70664f; }
 
 /* The action dock remains visible while the hand scrolls. */
 .battle-screen .action-dock {
@@ -230,6 +195,7 @@
 
 @media (max-width: 359px) {
   .battle-screen .hand-grid { grid-template-columns: none; grid-auto-columns: 92px; }
+  .battle-screen .card-symbols > img { width: 42px; height: 42px; flex-basis: 42px; }
   .battle-screen .decision-panel { padding-inline: 12px; }
   .battle-screen .player-resource-bar { padding-inline: 10px; gap: 4px; }
   .battle-screen .player-resource-bar strong { font-size: 1.25rem; }
@@ -242,12 +208,10 @@
   .battle-screen .player-resource-bar { padding-block: 7px; }
   .battle-screen .decision-panel { padding-top: 8px; }
   .battle-screen .skill-tray { margin-bottom: 6px; padding-bottom: 8px; }
-  .battle-screen .skill-tile { min-height: 92px; }
-  .battle-screen .skill-tile .skill-medallion { width: 48px; height: 48px; }
-  .battle-screen .skill-medallion > .battle-icon { width: 26px; height: 26px; }
+  .battle-screen .skill-tile { min-height: 54px; }
   .battle-screen .hand-card { min-height: 98px; }
   .battle-screen .reels-modal .modal-heading { padding-block: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .battle-screen .skill-medallion { transition: none; }
+  .battle-screen :is(button, .hand-card) { transition: none; }
 }

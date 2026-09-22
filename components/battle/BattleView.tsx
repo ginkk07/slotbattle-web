@@ -9,7 +9,7 @@ import { Hand } from "./Hand.tsx";
 import { CombatLog } from "./CombatLog.tsx";
 import { useBattlePlayback } from "./useBattlePlayback.ts";
 import { Modal } from "../ui/Modal.tsx";
-import { BattleIcon, conditionLabel, skillIcon } from "./BattleIcon.tsx";
+import { BattleIcon, conditionLabel } from "./BattleIcon.tsx";
 import "./battle-ui.css";
 
 type Panel = "action" | "bag" | "log";
@@ -82,10 +82,9 @@ export function BattleView({ state, catalog, onCommand, onComplete, completionLa
           const definition = catalog.skills[owned.id];
           const current = definition.levels[owned.level - 1];
           const sealed = state.sealedSkills.includes(owned.id);
-          const icon = skillIcon(owned.id);
           return <button
             type="button"
-            className={`skill-tile skill-${icon} rarity-${definition.rarity} ${skillId === owned.id ? "active" : ""}`}
+            className={`skill-tile rarity-${definition.rarity} ${skillId === owned.id ? "active" : ""}`}
             aria-pressed={skillId === owned.id}
             aria-label={`${definition.name}，等級 ${owned.level}，${conditionLabel(current.condition)}${sealed ? "，已封印" : ""}`}
             title={current.description}
@@ -93,10 +92,6 @@ export function BattleView({ state, catalog, onCommand, onComplete, completionLa
             key={owned.id}
             onClick={() => selectSkill(skillId === owned.id ? null : owned.id)}
           >
-            <span className="skill-medallion" aria-hidden="true">
-              <BattleIcon name={icon} />
-              <span className="skill-level">{sealed ? <BattleIcon name="lock" /> : owned.level}</span>
-            </span>
             <span className="skill-name">{definition.name}</span>
             <span className="skill-condition">{sealed ? "已封印" : conditionLabel(current.condition)}</span>
           </button>;
@@ -123,7 +118,7 @@ export function BattleView({ state, catalog, onCommand, onComplete, completionLa
         <div className="main-actions">
           <button type="button" className="end-turn" onClick={() => command({ type: "beginEnd" })}><BattleIcon name="end" />結束回合</button>
           <button type="button" className="primary" disabled={immobilized || (skill ? !canUseSkill : !selected.length)} onClick={() => command(skill ? { type: "skill", skillId: skill.id, cardIds: selected } : { type: "play", cardIds: selected })}>
-            <BattleIcon name={skill ? skillIcon(skill.id) : "cards"} />{skill ? "使用技能" : `出牌${selected.length ? ` · ${selected.length}` : ""}`}<BattleIcon name="arrow" />
+            {!skill && <BattleIcon name="cards" />}{skill ? "使用技能" : `出牌${selected.length ? ` · ${selected.length}` : ""}`}<BattleIcon name="arrow" />
           </button>
         </div>
       </>}
