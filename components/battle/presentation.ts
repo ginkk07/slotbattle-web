@@ -2,6 +2,16 @@
 
 /** Visual choices live outside the content and combat engine. */
 const artBase = `${import.meta.env.BASE_URL}art/`;
+export const cardArt = {
+  base: `${artBase}card-base.png`,
+  symbols: {
+    attack: `${artBase}icon-attack.png`,
+    defense: `${artBase}icon-defense.png`,
+    star: `${artBase}icon-skill.png`,
+    lucky: `${artBase}icon-luck.png`,
+    skull: `${artBase}icon-misfortune.png`,
+  },
+} as const;
 export const battleArt = {
   background: `${artBase}ruins-battle.png`,
   atlas: `${artBase}battle-characters.png`,

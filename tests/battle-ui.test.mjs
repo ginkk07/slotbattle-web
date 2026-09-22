@@ -53,7 +53,7 @@ test("eight cards retain all 24 symbols and accessible numeric scores", () => {
   const cards = Array.from({ length: 8 }, (_, index) => card(String(index), ["attack", "defense", "star"]));
   const html = render(Hand, handProps(cards));
   assert.equal(buttons(html).length, 8);
-  assert.equal((html.match(/class="battle-icon symbol-/gu) ?? []).length, 24);
+  assert.equal((html.match(/src="[^" ]*icon-(?:attack|defense|skill|luck|misfortune)\.png"/gu) ?? []).length, 24);
   assert.match(html, /role="group" aria-label="選擇手牌"/u);
   assert.match(html, /劍、盾、星，攻擊 1，護甲 1/u);
   assert.doesNotMatch(html, /⚔|🛡|✨|🍀|💀/u);
@@ -192,7 +192,8 @@ test("rendering preserves the battle state and the reel remains a dialog", () =>
 test("foundation CSS scopes changes away from the arena and includes narrow-screen layout", async () => {
   const css = await readFile(new URL("../components/battle/battle-ui.css", import.meta.url), "utf8");
   assert.doesNotMatch(css, /\.(arena|topbar|run-progress|character-sprite)\b/u);
-  assert.match(css, /grid-template-columns: repeat\(4, minmax\(0, 1fr\)\)/u);
+  assert.match(css, /grid-auto-flow: column/u);
+  assert.match(css, /overflow-x: auto/u);
   assert.match(css, /@media \(max-width: 359px\)/u);
   assert.match(css, /prefers-reduced-motion/u);
 });

@@ -1,6 +1,7 @@
 import type { Card, Catalog } from "../../game/model.ts";
 import { cardScore, isCursed } from "../../game/cards.ts";
 import { BattleIcon } from "./BattleIcon.tsx";
+import { cardArt } from "./presentation.ts";
 
 export function Hand({ cards, selected, catalog, onToggle, disabled, material, skullBoost, retainingRound }: {
   cards: Card[]; selected: string[]; catalog: Catalog; onToggle: (id: string) => void;
@@ -26,12 +27,13 @@ export function Hand({ cards, selected, catalog, onToggle, disabled, material, s
         disabled={disabled || cursed || expires}
         onClick={() => onToggle(card.id)}
       >
+        <img className="card-base-art" src={cardArt.base} alt="" draggable={false} />
         <span className="card-origin">
           <span className="origin-label" title={card.origin}>{card.origin}</span>
           <span className="selection-mark" aria-hidden="true">{isSelected ? <BattleIcon name="check" /> : cursed || expires ? <BattleIcon name="lock" /> : null}</span>
         </span>
         <span className="card-symbols" aria-hidden="true">
-          {card.symbols.map((symbol, index) => <BattleIcon key={index} name={symbol} className={`symbol-${symbol}`} />)}
+          {card.symbols.map((symbol, index) => <img key={index} src={cardArt.symbols[symbol]} alt="" draggable={false} />)}
         </span>
         <span className="card-score">
           {cursed ? <span className="card-state">下回合 AP −1</span>

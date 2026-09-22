@@ -127,32 +127,30 @@
 .battle-screen .hand-heading > span { color: var(--ui-muted); font-size: .65rem; }
 .battle-screen .hand-heading button { min-height: 44px; padding: 6px 11px; border: 1px solid #c9b28435; border-radius: 999px; color: var(--ui-gold); font-size: .7rem; background: transparent; }
 
-/* Four-card rows preserve every symbol; the numbers remain engine-derived. */
-.battle-screen .hand-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px 8px; padding: 4px 0; }
+/* One horizontal row keeps the long-card silhouette and exposes the next card. */
+.battle-screen .hand-grid {
+  grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: clamp(96px, 25vw, 112px);
+  gap: 10px; padding: 6px 4px 10px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+}
+.battle-screen .hand-grid::-webkit-scrollbar { display: none; }
 .battle-screen .hand-card {
-  position: relative; isolation: isolate; min-height: clamp(98px, 12.5dvh, 118px); padding: 7px;
-  border: 1px solid #f8ebcd; border-radius: 3px 11px 3px 11px;
-  background: linear-gradient(155deg, #fff9eb, #e3d8be); color: #354150;
+  position: relative; isolation: isolate; min-height: 0; aspect-ratio: 941 / 1672; padding: 12px 11px 10px;
+  scroll-snap-align: start; border: 0; border-radius: 7px;
+  background: transparent; color: #354150;
   box-shadow: 0 3px 0 #8c7e5f, 0 6px 10px #0004; transform: translateY(0);
 }
-.battle-screen .hand-card::before { content: ""; position: absolute; z-index: -1; inset: 4px; border: 1px solid #b69a6340; border-radius: 1px 7px 1px 7px; pointer-events: none; }
-.battle-screen .hand-card::after { content: ""; position: absolute; z-index: -1; top: 50%; left: 50%; width: 37px; height: 37px; border: 1px solid #b297601f; transform: translate(-50%, -50%) rotate(45deg); pointer-events: none; }
-.battle-screen .hand-card:not(:disabled):hover { background: linear-gradient(155deg, #fffdf5, #ede0c2); border-color: #fff3d3; transform: translateY(-2px); }
-.battle-screen .hand-card.selected { background: linear-gradient(145deg, #fff9e2, #ecd393); border-color: #fff3c7; box-shadow: 0 0 0 2px #ddbd75, 0 4px 0 #8d7545, 0 0 20px #e8c77e40; transform: translateY(-4px); }
-.battle-screen .hand-card.selected:not(:disabled):hover { background: linear-gradient(145deg, #fffbed, #f2dcaa); transform: translateY(-4px); }
+.battle-screen .hand-card .card-base-art { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; }
+.battle-screen .hand-card:not(:disabled):hover { border-color: #fff3d3; transform: translateY(-2px); }
+.battle-screen .hand-card.selected { border-color: #fff3c7; box-shadow: 0 0 0 2px #ddbd75, 0 4px 0 #8d7545, 0 0 20px #e8c77e40; transform: translateY(-4px); }
+.battle-screen .hand-card.selected:not(:disabled):hover { transform: translateY(-4px); }
 .battle-screen .hand-card:not(:disabled):active { transform: translateY(0); }
 .battle-screen .hand-card .card-origin { align-items: center; gap: 3px; font: 400 .6rem/1.3 sans-serif; color: #70664f; }
 .battle-screen .hand-card .origin-label { max-width: calc(100% - 17px); }
 .battle-screen .hand-card .selection-mark { display: grid; place-items: center; width: 14px; height: 14px; border: 1px solid #9f8b6270; border-radius: 50%; background: transparent; color: #fff7e0; }
 .battle-screen .hand-card .selection-mark .battle-icon { width: 11px; height: 11px; stroke-width: 2.6; }
 .battle-screen .hand-card.selected .selection-mark { background: #8b713d; border-color: #8b713d; }
-.battle-screen .hand-card .card-symbols { flex: 1; gap: 2px; min-height: 43px; padding: 8px 0; }
-.battle-screen .card-symbols > .battle-icon { width: calc((100% - 4px) / 3); max-width: 29px; height: auto; color: #697082; }
-.battle-screen .card-symbols .symbol-attack { color: #84654c; }
-.battle-screen .card-symbols .symbol-defense { color: #5c7b92; }
-.battle-screen .card-symbols .symbol-star { color: #9d7936; }
-.battle-screen .card-symbols .symbol-lucky { color: #598369; }
-.battle-screen .card-symbols .symbol-skull { color: #806878; }
+.battle-screen .hand-card .card-symbols { flex: 1; flex-direction: column; gap: 6px; min-height: 0; padding: 4px 0; }
+.battle-screen .card-symbols > img { width: 34px; height: 34px; flex: 0 0 34px; object-fit: contain; }
 .battle-screen .hand-card .card-score { min-height: 26px; align-items: center; border-top: 1px solid #99835238; padding-top: 4px; color: #4e5460; font: 400 1rem/1.1 Georgia, serif; }
 .battle-screen .card-score > span { display: inline-flex; align-items: center; gap: 2px; }
 .battle-screen .card-score .battle-icon { width: 13px; height: 13px; }
@@ -161,6 +159,7 @@
 .battle-screen .card-score .card-state { width: 100%; justify-content: center; font: 500 .6rem/1.4 sans-serif; text-align: center; }
 .battle-screen .hand-card:disabled { opacity: .58; }
 .battle-screen .hand-card.cursed { opacity: .9; background: linear-gradient(145deg, #454450, #292d40); border-color: #9d8493; box-shadow: 0 3px 0 #191d2e; }
+.battle-screen .hand-card.cursed .card-base-art { filter: brightness(.42) saturate(.5); }
 .battle-screen .hand-card.cursed::before { border-color: #c2a4b33b; }
 .battle-screen .hand-card.cursed :is(.card-origin, .card-score, .battle-icon) { color: #ddbfce; }
 .battle-screen .hand-card.expired .selection-mark { color: #70664f; }
@@ -207,6 +206,7 @@
 .battle-screen .reels-modal .slot-grid { gap: 6px; padding: 6px; border-color: #9e896657; border-radius: 5px; background: #101b2d; }
 .battle-screen .reels-modal .slot-cell { border-color: #fff0d4; border-radius: 3px 8px 3px 8px; background: linear-gradient(145deg, #fff6e1, #d7ceb9); color: #76644d; box-shadow: inset 0 0 0 3px #a8926522; }
 .battle-screen .reels-modal .slot-cell .battle-icon { width: clamp(30px, 10vw, 43px); height: clamp(30px, 10vw, 43px); }
+.battle-screen .reels-modal .slot-cell img { width: clamp(30px, 10vw, 43px); height: clamp(30px, 10vw, 43px); object-fit: contain; }
 .battle-screen .reels-modal .slot-cell.symbol-defense { color: #557a90; }
 .battle-screen .reels-modal .slot-cell.symbol-star { color: #9c7634; }
 .battle-screen .reels-modal .slot-cell.symbol-lucky { color: #568063; background: linear-gradient(145deg, #e9f0d7, #c5d3b4); }
@@ -229,7 +229,7 @@
 .battle-screen .damage-detail { border-color: var(--ui-line); }
 
 @media (max-width: 359px) {
-  .battle-screen .hand-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .battle-screen .hand-grid { grid-template-columns: none; grid-auto-columns: 92px; }
   .battle-screen .decision-panel { padding-inline: 12px; }
   .battle-screen .player-resource-bar { padding-inline: 10px; gap: 4px; }
   .battle-screen .player-resource-bar strong { font-size: 1.25rem; }
