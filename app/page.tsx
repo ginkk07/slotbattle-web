@@ -13,6 +13,7 @@ import { Setup } from "../components/battle/Setup.tsx";
 import { AdventureSetup } from "../components/battle/AdventureSetup.tsx";
 import { AdventurePanel, RunProgress } from "../components/battle/AdventurePanel.tsx";
 import { Modal } from "../components/ui/Modal.tsx";
+import { UiLibrary } from "../components/ui/UiLibrary.tsx";
 
 const subscribeToClient = () => () => {};
 const clientSnapshot = () => true;
@@ -21,6 +22,7 @@ const serverSnapshot = () => false;
 export default function Home() {
   const loaded = useSyncExternalStore(subscribeToClient, clientSnapshot, serverSnapshot);
   // Initialize browser storage after hydration, while keeping the server shell identical.
+  if (loaded && new URLSearchParams(window.location.search).get("ui") === "library") return <UiLibrary />;
   return <HomeContent key={loaded ? "client" : "server"} loaded={loaded} />;
 }
 
