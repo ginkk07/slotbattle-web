@@ -122,8 +122,8 @@
 .battle-screen .hand-card.selected { border-color: #fff3c7; box-shadow: 0 0 0 2px #ddbd75, 0 4px 0 #8d7545, 0 0 20px #e8c77e40; transform: translateY(-4px); }
 .battle-screen .hand-card.selected:not(:disabled):hover { transform: translateY(-4px); }
 .battle-screen .hand-card:not(:disabled):active { transform: translateY(0); }
-.battle-screen .hand-card .card-symbols { height: 100%; flex-direction: column; justify-content: center; gap: 7px; min-height: 0; padding: 10px 0; }
-.battle-screen .card-symbols > img { width: 48px; height: 48px; flex: 0 0 48px; object-fit: contain; }
+.battle-screen .hand-card .card-symbols { height: 100%; flex-direction: column; justify-content: center; gap: 4px; min-height: 0; padding: 6px 0; }
+.battle-screen .card-symbols > img { width: 54px; height: 54px; flex: 0 0 54px; object-fit: contain; }
 .battle-screen .hand-card:disabled { opacity: .58; }
 .battle-screen .hand-card.cursed { opacity: .9; background: linear-gradient(145deg, #454450, #292d40); border-color: #9d8493; box-shadow: 0 3px 0 #191d2e; }
 .battle-screen .hand-card.cursed .card-base-art { filter: brightness(.42) saturate(.5); }
@@ -195,7 +195,7 @@
 
 @media (max-width: 359px) {
   .battle-screen .hand-grid { grid-template-columns: none; grid-auto-columns: 92px; }
-  .battle-screen .card-symbols > img { width: 42px; height: 42px; flex-basis: 42px; }
+  .battle-screen .card-symbols > img { width: 46px; height: 46px; flex-basis: 46px; }
   .battle-screen .decision-panel { padding-inline: 12px; }
   .battle-screen .player-resource-bar { padding-inline: 10px; gap: 4px; }
   .battle-screen .player-resource-bar strong { font-size: 1.25rem; }
