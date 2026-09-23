@@ -26,7 +26,7 @@ function asset(
 }
 
 export const uiAssets = [
-  asset("hud-panel", "玩家操作面板", "panels/hud-panel.png", "panel", "370 × 219", "370 × 219", "下方玩家操作區底板；文字與互動元件由程式疊加"),
+  asset("hud-panel", "玩家操作面板", "panels/hud-panel.png", "panel", "1024 × 1536", "512 × 768", "完整四排玩家操作區底板；文字與互動元件由程式疊加"),
   asset("button-idle", "橫向按鈕／一般", "buttons/pill-idle.png", "button", "291 × 135", "194 × 90", "技能與次要操作的預設狀態"),
   asset("button-selected", "橫向按鈕／選取", "buttons/pill-selected.png", "button", "299 × 154", "194 × 100", "技能選取與目前操作狀態"),
   asset("button-disabled", "橫向按鈕／停用", "buttons/pill-disabled.png", "button", "285 × 133", "194 × 91", "條件不足或不可操作狀態"),
@@ -68,5 +68,17 @@ export const uiArt = {
   ornaments: {
     divider: uiAssets[15].src,
     diamond: uiAssets[16].src,
+  },
+} as const;
+
+/** Fixed design-space regions for the 1024 × 1536 HUD panel. */
+export const hudLayout = {
+  width: 1024,
+  height: 1536,
+  regions: {
+    stats: { x: 56, y: 40, width: 912, height: 168 },
+    commands: { x: 56, y: 222, width: 912, height: 218 },
+    cards: { x: 56, y: 464, width: 912, height: 714 },
+    actions: { x: 56, y: 1204, width: 912, height: 276 },
   },
 } as const;
