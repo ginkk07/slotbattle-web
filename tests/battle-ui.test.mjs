@@ -139,14 +139,15 @@ test("card phase keeps skill availability, hand selection and end-turn controls"
   assert.match(html, /class="action-dock"/u);
 });
 
-test("AP pips are derived from the actual remaining AP", () => {
+test("player HUD first row contains combat damage and armor only", () => {
   const state = battle();
-  state.apCapacity = 5;
-  state.ap = 2;
+  state.phase = "cards";
+  state.hand = [card("one", ["attack", "defense", "star"])];
   const html = render(BattleView, battleProps(state));
-  const pips = html.match(/<span class="ap-pips"[^>]*>(.*?)<\/span>/u)?.[1] ?? "";
-  assert.equal((pips.match(/<i /gu) ?? []).length, 5);
-  assert.equal((pips.match(/class="filled"/gu) ?? []).length, 2);
+  const row = html.match(/<div class="player-resource-bar"[^>]*>(.*?)<\/div><div class="command-row"/u)?.[1] ?? "";
+  assert.match(row, /戰鬥傷害/u);
+  assert.match(row, /護甲/u);
+  assert.doesNotMatch(row, /生命|行動點|ap-pips/u);
 });
 
 test("zero AP disables paid reel actions but not confirming the board", () => {
