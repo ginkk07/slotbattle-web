@@ -25,9 +25,11 @@ export function Hand({ cards, selected, catalog, onToggle, disabled, material, s
         disabled={disabled || cursed || expires}
         onClick={() => onToggle(card.id)}
       >
-        <img className="card-base-art" src={isSelected ? cardArt.selected : cardArt.base} alt="" draggable={false} />
-        <span className="card-symbols" aria-hidden="true">
-          {card.symbols.map((symbol, index) => <img key={index} src={cardArt.symbols[symbol]} alt="" draggable={false} />)}
+        <span className="card-face" aria-hidden="true">
+          <img className="card-base-art" src={isSelected ? cardArt.selected : cardArt.base} alt="" draggable={false} />
+          <span className="card-symbols">
+            {card.symbols.map((symbol, index) => <img key={index} src={cardArt.symbols[symbol]} alt="" draggable={false} />)}
+          </span>
         </span>
       </button>;
     })}

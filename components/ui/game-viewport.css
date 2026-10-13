@@ -10,7 +10,7 @@ html, body { min-width: 0; height: 100%; overflow: hidden; }
 .game-canvas .is-battle .battle-screen { position: absolute; inset: 0; width: 450px; height: 800px; }
 .game-canvas .is-battle .topbar { position: absolute; inset: 0 0 auto; z-index: 8; }
 .game-canvas .is-battle .run-progress { position: absolute; top: 48px; left: 0; right: 0; height: 28px; z-index: 8; }
-.game-canvas .is-opening .topbar { height: 54px; padding: 12px 20px; }
+.game-canvas .is-opening .topbar { display: none; }
 .game-canvas .opening-screen { position: absolute; inset: 0; overflow: hidden; }
 .game-canvas .opening-hero { height: 360px; }
 .game-canvas .opening-title { top: 72px; }

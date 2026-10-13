@@ -5,7 +5,7 @@
   --ui-serif: "Noto Serif TC", "Songti TC", "PMingLiU", Georgia, serif;
   background: var(--battle-background) center / 450px 800px no-repeat;
   color: var(--ui-text);
-  display: grid; grid-template-rows: 314px 486px;
+  display: grid; grid-template-rows: 328px 472px;
 }
 .is-battle .topbar { background: #18201c; border-color: #bda87130; }
 .is-battle .run-progress { background: #202720; }
@@ -17,7 +17,7 @@
 .battle-screen .muted { color: var(--ui-muted); }
 
 /* Both character canvases share a foot pivot at (384, 704) / 768. */
-.battle-screen .arena { height: 314px; min-height: 0; background: transparent; }
+.battle-screen .arena { height: 328px; min-height: 0; background: transparent; }
 .battle-screen .arena::after { background: linear-gradient(#07110c66, transparent 30%, #11180d22); }
 .battle-screen .arena-caption { position: absolute; top: 68px; left: 0; right: 0; font-size: .7rem; padding: 9px 14px; color: var(--ui-text); }
 .battle-screen .arena-caption > span:first-child { color: #f5e6bd; }
@@ -59,7 +59,7 @@
 .battle-screen .many-enemies .health-value { font-size: 10px; }
 
 /* A continuous background also supplies the darker lower HUD artwork. */
-.battle-screen .player-ui-panel { display: grid; grid-template-rows: 34px 100px 258px 94px; grid-template-areas: "resources" "commands" "controls" "actions"; min-height: 0; position: relative; background: #0e170c38; border: 0; border-radius: 0; box-shadow: none; }
+.battle-screen .player-ui-panel { display: grid; grid-template-rows: 34px 100px 244px 94px; grid-template-areas: "resources" "commands" "controls" "actions"; min-height: 0; position: relative; background: #0e170c38; border: 0; border-radius: 0; box-shadow: none; }
 .battle-screen .player-resource-bar { grid-area: resources; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 6px; padding: 3px 14px; height: 34px; min-height: 0; border: 0; background: #1420116b; }
 .battle-screen .player-resource-bar > div { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 6px; min-width: 0; border: 0; padding: 0; }
 .battle-screen .resource-label { display: flex; align-items: center; gap: 3px; white-space: nowrap; }
@@ -67,7 +67,7 @@
 .battle-screen .resource-label .battle-icon { width: 27px; height: 27px; }
 .battle-screen .player-resource-bar strong { font: 400 1.4rem/1 Georgia, serif; color: #fff4d4; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .battle-screen .player-resource-bar strong small { color: #e0d8bc; font: 400 .9rem/1 Georgia, serif; }
-.battle-screen .battle-controls { grid-area: controls; height: 258px; min-height: 0; position: relative; overflow: hidden; background: transparent; }
+.battle-screen .battle-controls { grid-area: controls; height: 244px; min-height: 0; position: relative; overflow: hidden; background: transparent; }
 .battle-screen .battle-controls > :is(.bag-panel, .combat-log, .battle-result, .slot-entry) { height: 100%; overflow-y: auto; overscroll-behavior: contain; }
 
 /* Skill medallions change their PNG without changing their hit area. */
@@ -102,9 +102,11 @@
 .battle-screen .hand-heading button { min-height: 44px; color: var(--ui-ivory); }
 
 /* Match the manifest's 108 x 192 body inside its 128 x 224 PNG canvas. */
-.battle-screen .decision-panel { display: grid; grid-template-rows: 44px 214px; height: 258px; padding: 0 14px; }
-.battle-screen .hand-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 98px; align-items: start; gap: 12px; height: 214px; padding: 17px 11px 20px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: none; scrollbar-width: none; }
+.battle-screen .decision-panel { display: grid; grid-template-rows: 44px 200px; height: 244px; padding: 0 14px; }
+.battle-screen .hand-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 90px; align-items: start; gap: 11px; height: 200px; padding: 22px 11px 18px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: none; scrollbar-width: none; }
 .battle-screen .hand-card { position: relative; isolation: isolate; aspect-ratio: 9 / 16; min-height: 0; padding: 0; border: 0; border-radius: 5px; background: transparent; color: #354150; box-shadow: none; scroll-snap-align: start; transform: none; }
+.battle-screen .card-face { display: block; position: absolute; inset: 0; isolation: isolate; pointer-events: none; transform: translateY(0); transition: transform .18s cubic-bezier(.2, .75, .3, 1); }
+.battle-screen .hand-card.selected .card-face { transform: translateY(-6px); }
 .battle-screen .hand-card .card-base-art { position: absolute; z-index: -1; left: -9.2593%; top: -8.3333%; width: 118.5185%; height: 116.6667%; max-width: none; object-fit: fill; pointer-events: none; }
 .battle-screen .hand-card:not(:disabled):hover { background: transparent; transform: none; }
 .battle-screen .hand-card.selected, .battle-screen .hand-card.selected:not(:disabled):hover { background: transparent; border: 0; box-shadow: none; transform: none; }
@@ -173,6 +175,6 @@
 .battle-screen .damage-detail { border-color: var(--ui-line); }
 
 @media (prefers-reduced-motion: reduce) {
-  .battle-screen :is(button, .health-fill-art) { transition: none; }
+  .battle-screen :is(button, .card-face, .health-fill-art) { transition: none; }
   .battle-screen :is(.actor-idle, .is-hit, .is-attacking, .damage-popup) { animation: none; }
 }
