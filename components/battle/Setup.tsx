@@ -1,12 +1,13 @@
 import { useState } from "react";
 import type { BattleSetup, Catalog } from "../../game/model.ts";
+import { battleArt } from "./presentation.ts";
 export function Setup({ catalog, onStart }: { catalog: Catalog; onStart: (setup: BattleSetup) => void }) {
   const [enemyIds, setEnemyIds] = useState(["ruins-sentinel"]);
   const [equipmentIds, setEquipmentIds] = useState(["sword", "iron-shield"]);
   const [skillIds, setSkillIds] = useState(Object.keys(catalog.skills));
   const [level, setLevel] = useState(1); const [items, setItems] = useState(false);
   function toggle(list: string[], id: string): string[] { return list.includes(id) ? list.filter((item) => item !== id) : [...list, id]; }
-  return <section className="setup panel"><div className="setup-heading"><div><p className="eyebrow">3 × 3 · 卡片戰鬥</p><h2>進入遺跡</h2><p className="muted">轉輪決定手牌。出牌累積攻防，消耗卡片使用技能。</p></div><button type="button" className="primary start-button" disabled={!enemyIds.length} onClick={() => onStart({ seed: Date.now() >>> 0, playerHp: 45, enemies: enemyIds, skills: skillIds.map((id) => ({ id, level })), equipment: equipmentIds, consumables: items ? Object.fromEntries(Object.keys(catalog.consumables).map((id) => [id, 1])) : {} })}>開始戰鬥 <span>→</span></button></div>
+  return <section className="setup panel"><div className="setup-heading" style={{ backgroundImage: `linear-gradient(0deg, #18231b, #18231b4d 95%), url("${battleArt.background}")` }}><div><p className="eyebrow">3 × 3 · 卡片戰鬥</p><h2>進入遺跡</h2><p className="muted">轉輪決定手牌。出牌累積攻防，消耗卡片使用技能。</p></div><button type="button" className="primary start-button" disabled={!enemyIds.length} onClick={() => onStart({ seed: Date.now() >>> 0, playerHp: 45, enemies: enemyIds, skills: skillIds.map((id) => ({ id, level })), equipment: equipmentIds, consumables: items ? Object.fromEntries(Object.keys(catalog.consumables).map((id) => [id, 1])) : {} })}>開始戰鬥 <span>→</span></button></div>
     <div className="setup-summary"><span>生命 <b>45</b></span><span>技能 <b>{skillIds.length}</b></span><span>裝備 <b>{equipmentIds.length}</b></span><span>敵人 <b>{enemyIds.length}</b></span></div>
     <details className="configuration" open><summary>調整戰鬥測試配置</summary><p className="muted">此配置用於獨立戰鬥測試。敵人依選取順序由左至右排列。</p>
       <fieldset><legend>敵方單位</legend><div className="option-grid">{Object.values(catalog.enemies).map((enemy) => <label key={enemy.id} className="choice"><input type="checkbox" checked={enemyIds.includes(enemy.id)} onChange={() => setEnemyIds(toggle(enemyIds, enemy.id))} /><span>{enemy.name}<small>{enemy.hp} HP · {enemy.tier}{enemy.draft ? " · 測試" : ""}</small></span></label>)}</div></fieldset>

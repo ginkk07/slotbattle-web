@@ -2,28 +2,41 @@
 
 /** Visual choices live outside the content and combat engine. */
 const artBase = `${import.meta.env.BASE_URL}art/`;
+const hudBase = `${artBase}hud-v2/`;
 export const cardArt = {
-  base: `${artBase}card-base.png`,
+  base: `${hudBase}cards/card-idle.png`,
+  selected: `${hudBase}cards/card-selected.png`,
   symbols: {
-    attack: `${artBase}icon-attack.png`,
-    defense: `${artBase}icon-defense.png`,
-    star: `${artBase}icon-skill.png`,
-    lucky: `${artBase}icon-luck.png`,
-    skull: `${artBase}icon-misfortune.png`,
+    attack: `${hudBase}icons/cards/attack.png`,
+    defense: `${hudBase}icons/cards/defense.png`,
+    star: `${hudBase}icons/cards/star.png`,
+    lucky: `${hudBase}icons/cards/lucky.png`,
+    skull: `${hudBase}icons/cards/skull.png`,
   },
 } as const;
 export const battleArt = {
-  background: `${artBase}ruins-battle.png`,
+  background: `${hudBase}background/forest-ruins.png`,
   atlas: `${artBase}battle-characters.png`,
   columns: 4,
   rows: 2,
 };
+export const hudArt = {
+  icons: Object.fromEntries(["ap", "attack", "bag", "coin", "defense", "end", "play", "play-disabled", "settings"].map((name) => [name, `${hudBase}icons/hud/${name}.png`])) as Record<string, string>,
+  skills: Object.fromEntries(["attack", "defense", "flame", "heal", "star"].flatMap((name) => [name, `${name}-disabled`]).map((name) => [name, `${hudBase}icons/skills/${name}.png`])) as Record<string, string>,
+  health: { track: `${hudBase}health/hp-track.png`, player: `${hudBase}health/hp-fill-teal.png`, enemy: `${hudBase}health/hp-fill-red.png` },
+};
+/** Resolve asset URLs through Vite's base so both local and GitHub Pages work. */
+export const hudTheme = {
+  "--battle-background": `url("${battleArt.background}")`,
+  ...Object.fromEntries(["skill-idle", "skill-selected", "skill-disabled", "action-primary-idle", "action-primary-pressed", "action-primary-disabled", "action-secondary-idle", "action-secondary-pressed", "action-secondary-disabled"].map((name) => [`--${name}`, `url("${hudBase}controls/${name}.png")`])),
+};
+export const hudStatePreloads = ["skill-selected", "skill-disabled", "action-primary-pressed", "action-primary-disabled", "action-secondary-pressed", "action-secondary-disabled"].map((name) => `${hudBase}controls/${name}.png`);
 export type CharacterArt = { cell: number; filter?: string; scale?: number; src?: string };
 export const characterArt: Record<string, CharacterArt> = {
-  player: { cell: 0 },
-  "ruins-sentinel": { cell: 4, scale: .9 },
-  "elite-ruins-sentinel": { cell: 4, filter: "sepia(.45) saturate(1.4)", scale: 1.05 },
-  "ruins-guardian": { cell: 4, filter: "sepia(.8) saturate(2.5) hue-rotate(325deg)", scale: 1.2 },
+  player: { cell: 0, src: `${hudBase}characters/knight.png` },
+  "ruins-sentinel": { cell: 4, src: `${hudBase}characters/sentinel.png` },
+  "elite-ruins-sentinel": { cell: 4, src: `${hudBase}characters/sentinel.png`, filter: "sepia(.45) saturate(1.4)", scale: 1.05 },
+  "ruins-guardian": { cell: 4, src: `${hudBase}characters/sentinel.png`, filter: "sepia(.8) saturate(2.5) hue-rotate(325deg)", scale: 1.1 },
   "ruins-mimic": { cell: 0, src: `${artBase}battle-mimic.png` },
   "iron-beast": { cell: 7, filter: "grayscale(.8) brightness(1.2)", scale: 1.1 },
   "arcane-hound": { cell: 6 },

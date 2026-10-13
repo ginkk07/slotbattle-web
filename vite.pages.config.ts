@@ -1,9 +1,10 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { fileURLToPath } from "node:url";
 
-const pagesRoot = new URL("./pages", import.meta.url).pathname;
-const publicDir = new URL("./public", import.meta.url).pathname;
-const outputDir = new URL("./dist-pages", import.meta.url).pathname;
+const pagesRoot = fileURLToPath(new URL("./pages", import.meta.url));
+const publicDir = fileURLToPath(new URL("./public", import.meta.url));
+const outputDir = fileURLToPath(new URL("./dist-pages", import.meta.url));
 
 export default defineConfig({
   root: pagesRoot,

@@ -13,6 +13,7 @@ import { Setup } from "../components/battle/Setup.tsx";
 import { AdventureSetup } from "../components/battle/AdventureSetup.tsx";
 import { AdventurePanel, RunProgress } from "../components/battle/AdventurePanel.tsx";
 import { Modal } from "../components/ui/Modal.tsx";
+import { GameViewport } from "../components/ui/GameViewport.tsx";
 
 const subscribeToClient = () => () => {};
 const clientSnapshot = () => true;
@@ -80,16 +81,16 @@ function HomeContent({ loaded }: { loaded: boolean }) {
     setRun(null); setJournal(null); setBattle(null); setSandbox(false); setError(""); setShowReset(false); persist(null);
   }
 
-  return <main className={`site-shell ${currentBattle ? "is-battle" : "is-adventure"} ${!run && !battle && !sandbox ? "is-opening" : ""}`}>
+  return <GameViewport><main className={`site-shell ${currentBattle ? "is-battle" : "is-adventure"} ${!run && !battle && !sandbox ? "is-opening" : ""}`}>
     <header className="topbar"><div className="brand"><span className="brand-mark">SB</span><div><h1>SLOT<span>BATTLE</span></h1><p>拉霸 Battle · {sandbox ? "戰鬥測試" : "遺跡冒險"}</p></div></div><div className="header-right">{(run || battle) && !showReset && <button type="button" className="quiet" onClick={() => setShowReset(true)}>重新開始</button>}</div></header>
     {error && <div className="error-message" role="alert">{error}</div>}
     <Modal open={showReset} title="重新開始冒險？" onClose={() => setShowReset(false)} className="reset-modal"><p>目前的冒險將會結束，回到出發準備。</p><div className="button-row"><button type="button" onClick={() => setShowReset(false)}>繼續遊玩</button><button type="button" className="primary" onClick={reset}>重新開始</button></div></Modal>
     {!loaded ? <section className="panel"><p>載入冒險…</p></section> : <>
-      {!run && !battle && (sandbox ? <><button type="button" className="quiet" onClick={() => setSandbox(false)}>← 返回冒險</button><Setup catalog={catalog} onStart={startBattle} /></> : <AdventureSetup catalog={catalog} rules={adventureRules} onStart={startRun} onSandbox={() => setSandbox(true)} />)}
+      {!run && !battle && (sandbox ? <div className="preparation-view"><button type="button" className="quiet" onClick={() => setSandbox(false)}>← 返回冒險</button><Setup catalog={catalog} onStart={startBattle} /></div> : <AdventureSetup catalog={catalog} rules={adventureRules} onStart={startRun} onSandbox={() => setSandbox(true)} />)}
       {run && <RunProgress state={run} catalog={catalog} rules={adventureRules} />}
       {currentBattle && <BattleView state={currentBattle} catalog={catalog} onCommand={sendBattle} error={error} onComplete={() => { if (run) sendRun({ type: "settleBattle" }); else setBattle(null); }} completionLabel={run ? currentBattle.outcome === "victory" ? "領取戰利品" : "查看冒險結果" : "重新配置"} />}
-      {run && run.phase !== "battle" && <AdventurePanel state={run} catalog={catalog} rules={adventureRules} onCommand={sendRun} onRestart={reset} error={error} />}
+      {run && run.phase !== "battle" && <div className="adventure-view"><AdventurePanel state={run} catalog={catalog} rules={adventureRules} onCommand={sendRun} onRestart={reset} error={error} /></div>}
     </>}
     <footer><span>冒險進度會自動保存在此瀏覽器</span></footer>
-  </main>;
+  </main></GameViewport>;
 }

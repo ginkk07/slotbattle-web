@@ -8,7 +8,7 @@ import { createServer } from "vite";
 import react from "@vitejs/plugin-react";
 
 let server;
-let Hand, SlotBoard, BattleView, BattleIcon, conditionLabel, skillIcon, catalog, createBattle;
+let Hand, SlotBoard, BattleView, Arena, BattleIcon, conditionLabel, skillIcon, gameViewportScale, GAME_WIDTH, GAME_HEIGHT, catalog, createBattle;
 before(async () => {
   // Transform the actual TSX with the existing Vite toolchain; no browser or
   // Cloudflare runtime is needed for these rendering/availability regressions.
@@ -19,11 +19,16 @@ before(async () => {
     appType: "custom",
     logLevel: "error",
     plugins: [react()],
+    // Keep React in Node's module cache for the renderer and transformed TSX,
+    // including Windows installs that use package-manager symlinks.
+    ssr: { external: ["react", "react/jsx-runtime", "react/jsx-dev-runtime", "react-dom"] },
     server: { middlewareMode: true, ws: false, watch: null },
   });
   ({ Hand } = await server.ssrLoadModule("/components/battle/Hand.tsx"));
   ({ SlotBoard } = await server.ssrLoadModule("/components/battle/SlotBoard.tsx"));
   ({ BattleView } = await server.ssrLoadModule("/components/battle/BattleView.tsx"));
+  ({ Arena } = await server.ssrLoadModule("/components/battle/Arena.tsx"));
+  ({ gameViewportScale, GAME_WIDTH, GAME_HEIGHT } = await server.ssrLoadModule("/components/ui/GameViewport.tsx"));
   ({ BattleIcon, conditionLabel, skillIcon } = await server.ssrLoadModule("/components/battle/BattleIcon.tsx"));
   ({ catalog } = await server.ssrLoadModule("/game/data/catalog.ts"));
   ({ createBattle } = await server.ssrLoadModule("/game/battle.ts"));
@@ -53,7 +58,7 @@ test("eight cards retain all 24 symbols and accessible numeric scores", () => {
   const cards = Array.from({ length: 8 }, (_, index) => card(String(index), ["attack", "defense", "star"]));
   const html = render(Hand, handProps(cards));
   assert.equal(buttons(html).length, 8);
-  assert.equal((html.match(/src="[^" ]*icon-(?:attack|defense|skill|luck|misfortune)\.png"/gu) ?? []).length, 24);
+  assert.equal((html.match(/src="[^" ]*hud-v2\/icons\/cards\/(?:attack|defense|star|lucky|skull)\.png"/gu) ?? []).length, 24);
   assert.match(html, /role="group" aria-label="選擇手牌"/u);
   assert.match(html, /劍、盾、星，攻擊 1，護甲 1/u);
   assert.doesNotMatch(html, /⚔|🛡|✨|🍀|💀/u);
@@ -66,6 +71,8 @@ test("selected cards expose a pressed state and keep their card ID callback", ()
   });
   const html = render(Hand, props);
   assert.match(html, /aria-pressed="true"/u);
+  assert.match(html, /cards\/card-selected\.png/u);
+  assert.match(render(Hand, handProps(props.cards)), /cards\/card-idle\.png/u);
   assert.match(html, /攻擊 9，護甲 0/u);
   const element = Hand(props);
   const button = element.props.children[0];
@@ -105,10 +112,10 @@ test("skill material mode keeps its accessible label without visible card text",
 
 test("symbol art is decorative and every current skill has an icon", () => {
   for (const name of ["attack", "defense", "star", "lucky", "skull"]) {
-    assert.match(render(BattleIcon, { name }), /aria-hidden="true" focusable="false"/u);
+    assert.match(render(BattleIcon, { name }), /aria-hidden="true"/u);
   }
   for (const id of Object.keys(catalog.skills)) {
-    assert.match(render(BattleIcon, { name: skillIcon(id) }), /<svg/u);
+    assert.match(render(BattleIcon, { name: skillIcon(id), variant: "skill" }), /hud-v2\/icons\/skills\/[^" ]+\.png/u);
   }
   assert.equal(skillIcon("future-skill"), "star");
 });
@@ -129,7 +136,9 @@ test("card phase keeps skill availability, hand selection and end-turn controls"
   state.hand = [card("one", ["attack", "attack", "attack"])];
   state.sealedSkills = ["power-strike"];
   const html = render(BattleView, battleProps(state));
-  assert.doesNotMatch(html, /class="skill-medallion"/u);
+  assert.match(html, /class="skill-medallion"/u);
+  assert.match(buttonWith(html, 'aria-label="強擊'), /attack-disabled\.png/u);
+  assert.match(buttonWith(html, 'aria-label="治癒'), /heal\.png/u);
   assert.match(html, /class="skill-name">強擊/u);
   assert.doesNotMatch(html, /class="card-origin"|class="card-score"/u);
   assert.match(buttonWith(html, 'aria-label="強擊'), /disabled=""/u);
@@ -139,7 +148,7 @@ test("card phase keeps skill availability, hand selection and end-turn controls"
   assert.match(html, /class="action-dock"/u);
 });
 
-test("player HUD first row contains combat damage and armor only", () => {
+test("player HUD shows combat damage, armor and the current AP capacity", () => {
   const state = battle();
   state.phase = "cards";
   state.hand = [card("one", ["attack", "defense", "star"])];
@@ -147,7 +156,25 @@ test("player HUD first row contains combat damage and armor only", () => {
   const row = html.match(/<div class="player-resource-bar"[^>]*>(.*?)<\/div><div class="command-row"/u)?.[1] ?? "";
   assert.match(row, /戰鬥傷害/u);
   assert.match(row, /護甲/u);
-  assert.doesNotMatch(row, /生命|行動點|ap-pips/u);
+  assert.match(row, /class="ap-resource"/u);
+  assert.match(row, new RegExp(`<strong>${state.ap}<small>/${state.apCapacity}`));
+  assert.doesNotMatch(row, /生命|ap-pips/u);
+});
+
+test("both units have PNG health bars beneath their actors and retain inspection", () => {
+  const state = battle();
+  state.units[0].hp = state.units[0].maxHp / 2;
+  const html = render(Arena, { state, catalog, hit: null, group: [], busy: false });
+  assert.equal((html.match(/class="unit-health" role="progressbar"/gu) ?? []).length, 2);
+  assert.match(html, /health\/hp-fill-teal\.png/u);
+  assert.match(html, /health\/hp-fill-red\.png/u);
+  assert.match(html, /clip-path:inset\(0 50% 0 0\)/u);
+  assert.match(html, /characters\/knight\.png/u);
+  assert.match(html, /characters\/sentinel\.png/u);
+  for (const button of buttons(html)) {
+    assert.ok(button.indexOf('class="actor-motion') < button.indexOf('class="unit-health'));
+    assert.match(button, /查看狀態/u);
+  }
 });
 
 test("zero AP disables paid reel actions but not confirming the board", () => {
@@ -192,11 +219,24 @@ test("rendering preserves the battle state and the reel remains a dialog", () =>
   assert.equal(JSON.stringify(state), before);
 });
 
-test("foundation CSS scopes changes away from the arena and includes narrow-screen layout", async () => {
+test("game viewport preserves one 9:16 coordinate system on portrait and landscape screens", () => {
+  assert.equal(GAME_WIDTH, 450);
+  assert.equal(GAME_HEIGHT, 800);
+  for (const [width, height] of [[450, 800], [390, 844], [320, 667], [1280, 720], [1920, 1080]]) {
+    const scale = gameViewportScale(width, height);
+    assert.ok(scale > 0);
+    assert.ok(GAME_WIDTH * scale <= width + 1e-9);
+    assert.ok(GAME_HEIGHT * scale <= height + 1e-9);
+    assert.equal((GAME_WIDTH * scale) / (GAME_HEIGHT * scale), 9 / 16);
+  }
+});
+
+test("HUD CSS uses fixed coordinates with internal scrolling and reduced motion", async () => {
   const css = await readFile(new URL("../components/battle/battle-ui.css", import.meta.url), "utf8");
-  assert.doesNotMatch(css, /\.(arena|topbar|run-progress|character-sprite)\b/u);
+  assert.match(css, /\.battle-screen \.unit-health/u);
+  assert.match(css, /var\(--action-primary-disabled\)/u);
   assert.match(css, /grid-auto-flow: column/u);
   assert.match(css, /overflow-x: auto/u);
-  assert.match(css, /@media \(max-width: 359px\)/u);
+  assert.doesNotMatch(css, /\b(?:dvh|svh|vh|vw|cqh)\b|@media\s*\((?:max|min)-(?:width|height)/u);
   assert.match(css, /prefers-reduced-motion/u);
 });

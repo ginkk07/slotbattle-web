@@ -27,5 +27,5 @@
     "trackTopInPNG": 24,
     "trackCanvasWidth": 1024
   },
-  "note": "preview composition only; gameplay UI integration is pending"
+  "note": "reference composition; gameplay uses a fixed 450x800 coordinate system with uniform viewport scaling, the same foot pivot, and a five-unit health bar gap"
 }

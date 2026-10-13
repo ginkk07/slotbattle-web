@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
 import type { SymbolId } from "../../game/model.ts";
+import { cardArt, hudArt } from "./presentation.ts";
 
-export type BattleIconName = SymbolId | "heart" | "heal" | "flame" | "diamond" | "reel" | "cards" | "bag" | "log" | "lock" | "unlock" | "arrow" | "check" | "end" | "rotate";
+export type BattleIconName = SymbolId | "heart" | "heal" | "flame" | "diamond" | "reel" | "cards" | "bag" | "log" | "lock" | "unlock" | "arrow" | "check" | "end" | "rotate" | "ap" | "coin" | "settings";
 
-const artwork: Record<BattleIconName, ReactNode> = {
+const artwork: Partial<Record<BattleIconName, ReactNode>> = {
   attack: <><path d="m19 4 9-1-1 9-12 12-7-7Z" fill="currentColor" fillOpacity=".16" /><path d="M25 6 12 19M6 15l11 11M9 22l-6 6m0-4 5 5" /></>,
   defense: <><path d="M16 3 27 8v8c0 6-6 10-11 13C11 26 5 22 5 16V8Z" fill="currentColor" fillOpacity=".14" /><path d="m16 7 7 4v5c0 4-4 7-7 9-3-2-7-5-7-9v-5ZM16 7v18M9 15h14" /></>,
   star: <><path d="m16 3 3.6 8.8L29 13l-7 6.3 2 9.2-8-4.8-8 4.8 2-9.2L3 13l9.4-1.2Z" fill="currentColor" fillOpacity=".18" /><path d="m16 9 1.8 7-1.8 5-1.8-5Z" fill="currentColor" stroke="none" /></>,
@@ -25,8 +26,13 @@ const artwork: Record<BattleIconName, ReactNode> = {
   rotate: <><path d="M27 13A11 11 0 1 0 27 21M27 4v9h-9" /></>,
 };
 
-/** Decorative SVGs; their button or adjacent text provides the accessible name. */
-export function BattleIcon({ name, className = "" }: { name: BattleIconName; className?: string }) {
+/** The button or adjacent text supplies the name for decorative artwork. */
+export function BattleIcon({ name, className = "", variant = "hud", disabled = false }: { name: BattleIconName; className?: string; variant?: "hud" | "skill" | "card"; disabled?: boolean }) {
+  const key = name === "cards" ? "play" : name === "diamond" ? "ap" : name;
+  const image = variant === "card" ? cardArt.symbols[name as SymbolId]
+    : variant === "skill" ? hudArt.skills[`${key}${disabled ? "-disabled" : ""}`]
+    : hudArt.icons[`${key}${disabled && key === "play" ? "-disabled" : ""}`];
+  if (image) return <img className={`battle-icon ${className}`} src={image} alt="" aria-hidden="true" draggable={false} />;
   return <svg className={`battle-icon ${className}`} viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.55" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">{artwork[name]}</svg>;
 }
 

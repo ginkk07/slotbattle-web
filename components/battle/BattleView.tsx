@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import type { Battle, Catalog, Command } from "../../game/model.ts";
 import { cardScore, isCursed } from "../../game/cards.ts";
 import { meetsCondition } from "../../game/conditions.ts";
@@ -9,7 +9,8 @@ import { Hand } from "./Hand.tsx";
 import { CombatLog } from "./CombatLog.tsx";
 import { useBattlePlayback } from "./useBattlePlayback.ts";
 import { Modal } from "../ui/Modal.tsx";
-import { BattleIcon, conditionLabel } from "./BattleIcon.tsx";
+import { BattleIcon, conditionLabel, skillIcon } from "./BattleIcon.tsx";
+import { cardArt, hudStatePreloads, hudTheme } from "./presentation.ts";
 import "./battle-ui.css";
 
 type Panel = "action" | "bag" | "log";
@@ -45,7 +46,9 @@ export function BattleView({ state, catalog, onCommand, onComplete, completionLa
   function toggleCard(id: string) { setSelected((current) => current.includes(id) ? current.filter((value) => value !== id) : [...current, id]); }
   function selectSkill(id: string | null) { setPanel("action"); setSkillId(id); setSelected([]); }
 
-  return <div className="battle-screen" aria-busy={busy}>
+  return <div className="battle-screen" aria-busy={busy} style={hudTheme as CSSProperties}>
+    <link rel="preload" as="image" href={cardArt.selected} />
+    {hudStatePreloads.map((href) => <link key={href} rel="preload" as="image" href={href} />)}
     <Arena state={scene} catalog={catalog} hit={hit} group={group} busy={busy} />
     <section className="player-ui-panel" aria-label="玩家操作介面">
     <div className="player-resource-bar" role="group" aria-label="玩家資源">
@@ -57,23 +60,29 @@ export function BattleView({ state, catalog, onCommand, onComplete, completionLa
         <span className="resource-label"><BattleIcon name="defense" />護甲</span>
         <strong key={visiblePlayer.armor} className="number-change">{visiblePlayer.armor}</strong>
       </div>
+      <div className="ap-resource">
+        <span className="resource-label"><BattleIcon name="ap" />AP</span>
+        <strong>{state.ap}<small>/{state.apCapacity}</small></strong>
+      </div>
     </div>
     {state.phase === "cards" && !retain && !state.outcome && <div className="command-row">
-      <button type="button" className={`item-button ${panel === "bag" ? "active" : ""}`} aria-label="物品" aria-pressed={panel === "bag"} onClick={() => setPanel(panel === "bag" ? "action" : "bag")}><BattleIcon name="bag" /></button>
+      <button type="button" className={`item-button ${panel === "bag" ? "active" : ""}`} aria-label="物品" aria-pressed={panel === "bag"} onClick={() => setPanel(panel === "bag" ? "action" : "bag")}><span className="skill-medallion"><BattleIcon name="bag" /></span><span className="item-label">物品</span></button>
       <div className="skill-tray" aria-label="選擇技能">{player.skills.map((owned) => {
         const definition = catalog.skills[owned.id];
         const current = definition.levels[owned.level - 1];
         const sealed = state.sealedSkills.includes(owned.id);
+        const unavailable = locked || state.phase !== "cards" || immobilized || sealed;
         return <button
           type="button"
           className={`skill-tile rarity-${definition.rarity} ${skillId === owned.id ? "active" : ""}`}
           aria-pressed={skillId === owned.id}
           aria-label={`${definition.name}，等級 ${owned.level}，${conditionLabel(current.condition)}${sealed ? "，已封印" : ""}`}
           title={current.description}
-          disabled={locked || state.phase !== "cards" || immobilized || sealed}
+          disabled={unavailable}
           key={owned.id}
           onClick={() => selectSkill(skillId === owned.id ? null : owned.id)}
         >
+          <span className="skill-medallion" aria-hidden="true"><BattleIcon name={skillIcon(owned.id)} variant="skill" disabled={unavailable} /></span>
           <span className="skill-name">{definition.name}</span>
           <span className="skill-condition">{sealed ? "已封印" : conditionLabel(current.condition)}</span>
         </button>;
@@ -88,7 +97,7 @@ export function BattleView({ state, catalog, onCommand, onComplete, completionLa
       {busy ? <section className="battle-result"><span className="result-sigil"><BattleIcon name="attack" /></span><p>回合 {scene.round}</p><h2>{state.round !== scene.round || state.outcome ? "回合結算" : "效果結算"}</h2><p>{hit?.label}</p></section> : state.outcome && panel === "action" ? <section className="battle-result" role="status"><span className="result-sigil"><BattleIcon name={state.outcome === "victory" ? "star" : "diamond"} /></span><p>戰鬥結束</p><h2>{state.outcome === "victory" ? "勝利" : state.outcome === "draw" ? "雙方全滅" : "冒險暫告一段落"}</h2><button type="button" className="primary" onClick={onComplete}>{completionLabel}</button></section> :
       panel === "log" ? <CombatLog state={state} /> :
       panel === "bag" ? <section className="bag-panel"><div className="section-heading"><h2>物品</h2><div><span>{Object.values(state.inventory).reduce((a, b) => a + b, 0)} 件</span><button type="button" className="quiet" onClick={() => setPanel("log")}>戰鬥紀錄</button></div></div><div className="consumable-list">{Object.entries(state.inventory).filter(([, count]) => count > 0).map(([id, count]) => <div className="consumable-item" key={id}><div><strong>{catalog.consumables[id].name} ×{count}</strong><p>{catalog.consumables[id].description}</p></div><button type="button" disabled={locked || state.phase !== "cards" || immobilized} onClick={() => command({ type: "consumable", itemId: id })}>使用</button></div>)}</div>{!Object.values(state.inventory).some((count) => count > 0) && <p className="muted">沒有消耗品。</p>}<h2 className="bag-heading">裝備</h2><div className="equipment-list">{player.equipment.map((id) => <details key={id}><summary>{catalog.equipment[id].name}</summary><p>{catalog.equipment[id].description}</p></details>)}{!player.equipment.length && <p className="muted">未攜帶裝備。</p>}</div></section> :
-      state.phase === "slots" ? <section className="slot-entry"><div className="mini-board" aria-hidden="true">{state.board.map((symbol, index) => <span key={index}><BattleIcon name={symbol} /></span>)}</div><p className="eyebrow">拉霸階段</p><h2>準備這回合的卡片</h2><p>查看敵人的行動，決定要不要重轉。</p><button type="button" className="primary" onClick={() => setSlotsOpen(true)}>打開拉霸 <BattleIcon name="arrow" /></button><small>剩餘 {state.ap} AP · 確認盤面後進入出牌階段</small></section> :
+      state.phase === "slots" ? <section className="slot-entry"><div className="mini-board" aria-hidden="true">{state.board.map((symbol, index) => <span key={index}><BattleIcon name={symbol} variant="card" /></span>)}</div><p className="eyebrow">拉霸階段</p><h2>準備這回合的卡片</h2><p>查看敵人的行動，決定要不要重轉。</p><button type="button" className="primary" onClick={() => setSlotsOpen(true)}>打開拉霸 <BattleIcon name="arrow" /></button><small>剩餘 {state.ap} AP · 確認盤面後進入出牌階段</small></section> :
       <section className="decision-panel">
         {level && !retain && <div className="material-hint"><div><strong>{skill?.name}</strong><button type="button" className="quiet" onClick={() => selectSkill(null)}>取消</button></div><p>{level.description}</p><span className={canUseSkill ? "condition-met" : "muted"}>{canUseSkill ? "✓ 條件達成" : `選擇卡片 · ${conditionLabel(level.condition)}`}</span></div>}
         {retain && <p className="notice">選擇要留到下一回合的卡片。每張花費 {catalog.rules.retainCost} AP。</p>}
