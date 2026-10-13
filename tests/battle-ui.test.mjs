@@ -84,8 +84,8 @@ test("selected cards expose a pressed state and keep their card ID callback", ()
   });
   const html = render(Hand, props);
   assert.match(html, /aria-pressed="true"/u);
-  assert.match(html, /cards\/card-selected\.png/u);
-  assert.match(render(Hand, handProps(props.cards)), /cards\/card-idle\.png/u);
+  assert.match(html, /src="[^"]*\/card-selected\.png"/u);
+  assert.match(render(Hand, handProps(props.cards)), /src="[^"]*\/card-idle\.png"/u);
   assert.match(html, /攻擊 9，護甲 0/u);
   const element = Hand(props);
   const button = element.props.children[0];

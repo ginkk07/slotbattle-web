@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore, type CSSProperties } from "react";
 import type { Battle, BattleSetup, Command } from "../game/model.ts";
 import type { Adventure, AdventureCommand, AdventureSetup as RunSetup } from "../game/adventure/model.ts";
 import { catalog } from "../game/data/catalog.ts";
@@ -14,6 +14,8 @@ import { AdventureSetup } from "../components/battle/AdventureSetup.tsx";
 import { AdventurePanel, RunProgress } from "../components/battle/AdventurePanel.tsx";
 import { Modal } from "../components/ui/Modal.tsx";
 import { GameViewport } from "../components/ui/GameViewport.tsx";
+import { interfaceTheme } from "../components/battle/presentation.ts";
+import "../components/ui/game-interface.css";
 
 const subscribeToClient = () => () => {};
 const clientSnapshot = () => true;
@@ -81,7 +83,7 @@ function HomeContent({ loaded }: { loaded: boolean }) {
     setRun(null); setJournal(null); setBattle(null); setSandbox(false); setError(""); setShowReset(false); persist(null);
   }
 
-  return <GameViewport><main className={`site-shell ${currentBattle ? "is-battle" : "is-adventure"} ${!run && !battle && !sandbox ? "is-opening" : ""}`}>
+  return <GameViewport><main className={`site-shell ${currentBattle ? "is-battle" : "is-adventure"} ${!run && !battle && !sandbox ? "is-opening" : ""}`} style={interfaceTheme as CSSProperties}>
     <header className="topbar"><div className="brand"><span className="brand-mark">SB</span><div><h1>SLOT<span>BATTLE</span></h1><p>拉霸 Battle · {sandbox ? "戰鬥測試" : "遺跡冒險"}</p></div></div><div className="header-right">{(run || battle) && !showReset && <button type="button" className="quiet" onClick={() => setShowReset(true)}>重新開始</button>}</div></header>
     {error && <div className="error-message" role="alert">{error}</div>}
     <Modal open={showReset} title="重新開始冒險？" onClose={() => setShowReset(false)} className="reset-modal"><p>目前的冒險將會結束，回到標題畫面。</p><div className="button-row"><button type="button" onClick={() => setShowReset(false)}>繼續遊玩</button><button type="button" className="primary" onClick={reset}>重新開始</button></div></Modal>

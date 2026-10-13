@@ -3,9 +3,10 @@
 /** Visual choices live outside the content and combat engine. */
 const artBase = `${import.meta.env.BASE_URL}art/`;
 const hudBase = `${artBase}hud-v2/`;
+const uiBase = `${artBase}ui-v3/`;
 export const cardArt = {
-  base: `${hudBase}cards/card-idle.png`,
-  selected: `${hudBase}cards/card-selected.png`,
+  base: `${uiBase}card-idle.png`,
+  selected: `${uiBase}card-selected.png`,
   symbols: {
     attack: `${hudBase}icons/cards/attack.png`,
     defense: `${hudBase}icons/cards/defense.png`,
@@ -27,10 +28,11 @@ export const hudArt = {
   health: { track: `${hudBase}health/hp-track.png`, player: `${hudBase}health/hp-fill-teal.png`, enemy: `${hudBase}health/hp-fill-red.png` },
 };
 /** Resolve asset URLs through Vite's base so both local and GitHub Pages work. */
-const controlTheme = Object.fromEntries(["skill-idle", "skill-selected", "skill-disabled", "action-primary-idle", "action-primary-pressed", "action-primary-disabled", "action-secondary-idle", "action-secondary-pressed", "action-secondary-disabled"].map((name) => [`--${name}`, `url("${hudBase}controls/${name}.png")`]));
-export const hudTheme = { "--battle-background": `url("${battleArt.background}")`, ...controlTheme };
-export const titleTheme = { "--title-background": `url("${titleArt.background}")`, ...controlTheme };
-export const hudStatePreloads = ["skill-selected", "skill-disabled", "action-primary-pressed", "action-primary-disabled", "action-secondary-pressed", "action-secondary-disabled"].map((name) => `${hudBase}controls/${name}.png`);
+const controlNames = ["skill-idle", "skill-selected", "skill-disabled", "action-primary-idle", "action-primary-hover", "action-primary-pressed", "action-primary-disabled", "action-secondary-idle", "action-secondary-hover", "action-secondary-pressed", "action-secondary-disabled", "choice-idle", "choice-selected", "disc-dark", "disc-light", "panel-light"];
+export const interfaceTheme = Object.fromEntries(controlNames.map((name) => [`--${name}`, `url("${uiBase}${name}.png")`]));
+export const hudTheme = { "--battle-background": `url("${battleArt.background}")`, ...interfaceTheme };
+export const titleTheme = { "--title-background": `url("${titleArt.background}")`, ...interfaceTheme };
+export const hudStatePreloads = controlNames.filter((name) => /hover|pressed|disabled|selected/.test(name)).map((name) => `${uiBase}${name}.png`);
 export type CharacterArt = { cell: number; filter?: string; scale?: number; src?: string };
 export const characterArt: Record<string, CharacterArt> = {
   player: { cell: 0, src: `${hudBase}characters/knight.png` },

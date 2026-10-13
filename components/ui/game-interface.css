@@ -1,0 +1,40 @@
+/* Neutral game UI: PNG frames supply the visual surfaces; layout stays fixed. */
+.game-canvas .site-shell {
+  --ink: #191a20; --panel: #272930; --panel-2: #33353e; --line: #777a854f;
+  --acid: #d9c39a; --muted: #b9bbc3; --white: #efefea;
+  --ui-font: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  color: var(--white); background: var(--ink); font-family: var(--ui-font);
+}
+.game-canvas .site-shell .topbar { background: #202228e8; border-color: #ffffff20; }
+.game-canvas .site-shell .run-progress { background: #2b2d33eb; border-color: #ffffff20; }
+.game-canvas .site-shell .brand-mark { border: 0; border-radius: 0; background: var(--choice-idle) center / 100% 100% no-repeat; color: #e8e7df; transform: none; font-family: var(--ui-font); }
+.game-canvas .site-shell .brand h1 { font: 600 14px/1 var(--ui-font); letter-spacing: .12em; }
+.game-canvas .site-shell .brand h1 span { color: #dfd4bb; }
+.game-canvas .site-shell button { transform: none; }
+.game-canvas .site-shell button.primary {
+  border: 0; border-radius: 0; box-shadow: none;
+  background: var(--action-primary-idle) center / 114.2857% 157.1429% no-repeat;
+  color: #282a30; font-weight: 600;
+}
+.game-canvas .site-shell button.primary:not(:disabled):hover { background-color: transparent; background-image: var(--action-primary-hover); filter: none; }
+.game-canvas .site-shell button.primary:not(:disabled):active { background-image: var(--action-primary-pressed); filter: none; }
+.game-canvas .site-shell button.primary:disabled { background-image: var(--action-primary-disabled); color: #65666e; opacity: 1; }
+.game-canvas .site-shell .game-modal {
+  background: var(--panel-light) center / 100% 100% no-repeat;
+  border: 0; border-radius: 0 18px 0 0; color: #292b33;
+  box-shadow: 0 24px 80px #0009; font-family: var(--ui-font);
+  scrollbar-color: #9597a1 transparent;
+}
+.game-canvas .site-shell .game-modal .modal-heading { border-color: #a5a6ac60; }
+.game-canvas .site-shell .game-modal .modal-heading h2 { color: #282a30; font: 600 21px/1.4 var(--ui-font); letter-spacing: .04em; }
+.game-canvas .site-shell .game-modal .eyebrow { color: #73747b; }
+.game-canvas .site-shell .game-modal .modal-close { border: 0; color: #383b43; background: transparent; font-family: var(--ui-font); }
+.game-canvas .site-shell .game-modal :is(.muted, .modal-footnote, .unit-status-empty) { color: #656873; }
+.game-canvas .site-shell .reset-modal > p { color: #636670; }
+.game-canvas .site-shell .game-modal .button-row { padding: 16px 20px; background: #25272d; }
+.game-canvas .site-shell .game-modal .button-row button:not(.primary) {
+  border: 0; border-radius: 0; box-shadow: none; color: #eeeee7;
+  background: var(--action-secondary-idle) center / 114.2857% 157.1429% no-repeat;
+}
+.game-canvas .site-shell .game-modal .button-row button:not(.primary):hover { background-image: var(--action-secondary-hover); }
+.game-canvas .site-shell .game-modal .button-row button:not(.primary):active { background-image: var(--action-secondary-pressed); }
