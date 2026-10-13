@@ -1,0 +1,181 @@
+[
+  {
+    "path": "icons/cards/attack.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-cards-attack.svg"
+  },
+  {
+    "path": "icons/cards/defense.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-cards-defense.svg"
+  },
+  {
+    "path": "icons/cards/star.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-cards-star.svg"
+  },
+  {
+    "path": "icons/cards/lucky.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-cards-lucky.svg"
+  },
+  {
+    "path": "icons/cards/skull.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-cards-skull.svg"
+  },
+  {
+    "path": "icons/skills/attack.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-skills-attack.svg"
+  },
+  {
+    "path": "icons/skills/attack-disabled.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-skills-attack-disabled.svg"
+  },
+  {
+    "path": "icons/skills/heal.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-skills-heal.svg"
+  },
+  {
+    "path": "icons/skills/heal-disabled.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-skills-heal-disabled.svg"
+  },
+  {
+    "path": "icons/skills/defense.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-skills-defense.svg"
+  },
+  {
+    "path": "icons/skills/defense-disabled.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-skills-defense-disabled.svg"
+  },
+  {
+    "path": "icons/skills/flame.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-skills-flame.svg"
+  },
+  {
+    "path": "icons/skills/flame-disabled.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-skills-flame-disabled.svg"
+  },
+  {
+    "path": "icons/skills/star.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-skills-star.svg"
+  },
+  {
+    "path": "icons/skills/star-disabled.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-skills-star-disabled.svg"
+  },
+  {
+    "path": "icons/hud/attack.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-hud-attack.svg"
+  },
+  {
+    "path": "icons/hud/defense.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-hud-defense.svg"
+  },
+  {
+    "path": "icons/hud/ap.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-hud-ap.svg"
+  },
+  {
+    "path": "icons/hud/coin.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-hud-coin.svg"
+  },
+  {
+    "path": "icons/hud/bag.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-hud-bag.svg"
+  },
+  {
+    "path": "icons/hud/settings.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-hud-settings.svg"
+  },
+  {
+    "path": "icons/hud/play.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-hud-play.svg"
+  },
+  {
+    "path": "icons/hud/play-disabled.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-hud-play-disabled.svg"
+  },
+  {
+    "path": "icons/hud/end.png",
+    "category": "icon",
+    "frame": "icon",
+    "nativeSource": "sources/native/icons-hud-end.svg"
+  },
+  {
+    "path": "health/hp-track.png",
+    "category": "health",
+    "frame": "health"
+  },
+  {
+    "path": "health/hp-fill-red.png",
+    "category": "health",
+    "frame": "health"
+  },
+  {
+    "path": "health/hp-fill-teal.png",
+    "category": "health",
+    "frame": "health"
+  },
+  {
+    "path": "characters/knight.png",
+    "category": "character",
+    "frame": "character",
+    "source": "existing battle-characters atlas",
+    "pivot": {
+      "x": 384,
+      "y": 704
+    }
+  },
+  {
+    "path": "characters/sentinel.png",
+    "category": "character",
+    "frame": "character",
+    "source": "existing battle-characters atlas",
+    "pivot": {
+      "x": 384,
+      "y": 704
+    }
+  }
+]

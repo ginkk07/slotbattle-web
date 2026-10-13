@@ -1,0 +1,31 @@
+{
+  "designSpace": {
+    "width": 450,
+    "height": 800
+  },
+  "units": {
+    "player": {
+      "x": 27,
+      "y": 197,
+      "size": 164
+    },
+    "enemy": {
+      "x": 225,
+      "y": 151,
+      "size": 200
+    }
+  },
+  "health": {
+    "width": 154,
+    "footPivot": {
+      "x": 384,
+      "y": 704,
+      "canvas": 768
+    },
+    "gapBelowFeet": 5,
+    "centerOnFootPivot": true,
+    "trackTopInPNG": 24,
+    "trackCanvasWidth": 1024
+  },
+  "note": "preview composition only; gameplay UI integration is pending"
+}

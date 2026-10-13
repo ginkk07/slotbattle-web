@@ -1,0 +1,1035 @@
+{
+  "version": "hud-v2.1-2026-10-12",
+  "designSpace": {
+    "width": 450,
+    "height": 800,
+    "aspect": "9:16"
+  },
+  "frames": {
+    "designSpace": {
+      "width": 450,
+      "height": 800,
+      "aspect": "9:16"
+    },
+    "background": {
+      "width": 1080,
+      "height": 1920,
+      "opaque": true
+    },
+    "card": {
+      "width": 1024,
+      "height": 1792,
+      "content": {
+        "x": 80,
+        "y": 128,
+        "width": 864,
+        "height": 1536
+      },
+      "pivot": {
+        "x": 512,
+        "y": 896
+      },
+      "displayBody": {
+        "width": 108,
+        "height": 192
+      }
+    },
+    "skill": {
+      "width": 512,
+      "height": 512,
+      "content": {
+        "x": 56,
+        "y": 56,
+        "width": 400,
+        "height": 400
+      },
+      "pivot": {
+        "x": 256,
+        "y": 256
+      },
+      "displayBody": {
+        "width": 50,
+        "height": 50
+      }
+    },
+    "button": {
+      "width": 1024,
+      "height": 352,
+      "content": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "pivot": {
+        "x": 512,
+        "y": 176
+      },
+      "displayBody": {
+        "width": 192,
+        "height": 48
+      }
+    },
+    "icon": {
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      }
+    },
+    "character": {
+      "width": 768,
+      "height": 768,
+      "pivot": {
+        "x": 384,
+        "y": 704
+      }
+    },
+    "health": {
+      "width": 1024,
+      "height": 96,
+      "pivot": {
+        "x": 32,
+        "y": 48
+      }
+    }
+  },
+  "skillMapping": {
+    "life-recovery": "heal",
+    "power-strike": "attack",
+    "shield-block": "defense",
+    "fire-imbue": "flame",
+    "mana-armor": "star",
+    "flame-cover": "flame",
+    "shield-throw": "defense",
+    "flame-impact": "flame",
+    "shield-bash": "defense",
+    "holy-shield": "defense"
+  },
+  "assetCount": 43,
+  "assets": [
+    {
+      "path": "background/forest-ruins.png",
+      "family": "background",
+      "width": 1080,
+      "height": 1920,
+      "pivot": null,
+      "content": null,
+      "alpha": false,
+      "paintedBounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1080,
+        "height": 1920
+      },
+      "sha256": "fd1e1c0e3c39cd053c6e8f74b738bb1c44b161116638f26de92f489b2ff2f160",
+      "bytes": 4787849
+    },
+    {
+      "path": "cards/card-glow.png",
+      "family": "card",
+      "width": 1024,
+      "height": 1792,
+      "pivot": {
+        "x": 512,
+        "y": 896
+      },
+      "content": {
+        "x": 80,
+        "y": 128,
+        "width": 864,
+        "height": 1536
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 48,
+        "y": 92,
+        "width": 929,
+        "height": 1608
+      },
+      "sha256": "42a6c6849df063a67b4ee2ca733da559276a49b50824a180f384ec822b2f721e",
+      "bytes": 329686
+    },
+    {
+      "path": "cards/card-idle.png",
+      "family": "card",
+      "width": 1024,
+      "height": 1792,
+      "pivot": {
+        "x": 512,
+        "y": 896
+      },
+      "content": {
+        "x": 80,
+        "y": 128,
+        "width": 864,
+        "height": 1536
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 80,
+        "y": 129,
+        "width": 864,
+        "height": 1535
+      },
+      "sha256": "26c11a02de5946f826b2526122c6b2f481dae48fe401934a37512ca7af4e0002",
+      "bytes": 2090476
+    },
+    {
+      "path": "cards/card-selected.png",
+      "family": "card",
+      "width": 1024,
+      "height": 1792,
+      "pivot": {
+        "x": 512,
+        "y": 896
+      },
+      "content": {
+        "x": 80,
+        "y": 128,
+        "width": 864,
+        "height": 1536
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 48,
+        "y": 92,
+        "width": 929,
+        "height": 1608
+      },
+      "sha256": "73ddccd63173078f1c8a424b784a92d58ded233c550dd2b6cc83c03f2ca01a21",
+      "bytes": 2425256
+    },
+    {
+      "path": "characters/knight.png",
+      "family": "character",
+      "width": 768,
+      "height": 768,
+      "pivot": {
+        "x": 384,
+        "y": 704
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 64,
+        "y": 100,
+        "width": 640,
+        "height": 604
+      },
+      "sha256": "cd98a8bd6fb414c6b961042f7ff404392e5853445539bc45b8f9d2860eb68245",
+      "bytes": 754934
+    },
+    {
+      "path": "characters/sentinel.png",
+      "family": "character",
+      "width": 768,
+      "height": 768,
+      "pivot": {
+        "x": 384,
+        "y": 704
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 64,
+        "y": 108,
+        "width": 640,
+        "height": 596
+      },
+      "sha256": "f5d0a6edb2f4b115bacdbc01379e8ac872726167a3a6c0266589693cf8f16d26",
+      "bytes": 887279
+    },
+    {
+      "path": "controls/action-primary-disabled.png",
+      "family": "button",
+      "width": 1024,
+      "height": 352,
+      "pivot": {
+        "x": 512,
+        "y": 176
+      },
+      "content": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "sha256": "a7f3eb65e1c663db4f7cc8089f51028a809749fca1bb8cc9b79fbf95cdfe7244",
+      "bytes": 282108
+    },
+    {
+      "path": "controls/action-primary-idle.png",
+      "family": "button",
+      "width": 1024,
+      "height": 352,
+      "pivot": {
+        "x": 512,
+        "y": 176
+      },
+      "content": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "sha256": "d9d74ad8c5bb77f671061fdd44b90c99d8ca05cf3a9a0a0a8e5788a6c084202c",
+      "bytes": 283703
+    },
+    {
+      "path": "controls/action-primary-pressed.png",
+      "family": "button",
+      "width": 1024,
+      "height": 352,
+      "pivot": {
+        "x": 512,
+        "y": 176
+      },
+      "content": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "sha256": "192851916cbae9ade3e9e6f9452129708c95f5dc9fa6b06a1e6f763ecbf34f1b",
+      "bytes": 309052
+    },
+    {
+      "path": "controls/action-secondary-disabled.png",
+      "family": "button",
+      "width": 1024,
+      "height": 352,
+      "pivot": {
+        "x": 512,
+        "y": 176
+      },
+      "content": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "sha256": "f5063dd628efa809e6493ec04453de0e70228048a0a3fcf0c0568817ca9c7352",
+      "bytes": 222474
+    },
+    {
+      "path": "controls/action-secondary-idle.png",
+      "family": "button",
+      "width": 1024,
+      "height": 352,
+      "pivot": {
+        "x": 512,
+        "y": 176
+      },
+      "content": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "sha256": "194f39971f1d1cb237d27b6f05c1bbf752412dcd1cbff40166734b0923af7dda",
+      "bytes": 270164
+    },
+    {
+      "path": "controls/action-secondary-pressed.png",
+      "family": "button",
+      "width": 1024,
+      "height": 352,
+      "pivot": {
+        "x": 512,
+        "y": 176
+      },
+      "content": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 64,
+        "y": 64,
+        "width": 896,
+        "height": 224
+      },
+      "sha256": "53b535b5ebbe6c7fb7d40adc6435be46b78b19f34b7cf969aacaa89b91fa6e42",
+      "bytes": 245372
+    },
+    {
+      "path": "controls/skill-disabled.png",
+      "family": "skill",
+      "width": 512,
+      "height": 512,
+      "pivot": {
+        "x": 256,
+        "y": 256
+      },
+      "content": {
+        "x": 56,
+        "y": 56,
+        "width": 400,
+        "height": 400
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 56,
+        "y": 56,
+        "width": 400,
+        "height": 400
+      },
+      "sha256": "43657c472441779fabc01b95d4809121597467f9ab632df3c6d5d1c4beb4b1aa",
+      "bytes": 179079
+    },
+    {
+      "path": "controls/skill-glow.png",
+      "family": "skill",
+      "width": 512,
+      "height": 512,
+      "pivot": {
+        "x": 256,
+        "y": 256
+      },
+      "content": {
+        "x": 56,
+        "y": 56,
+        "width": 400,
+        "height": 400
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 24,
+        "y": 25,
+        "width": 463,
+        "height": 463
+      },
+      "sha256": "906aabc54ee1562d921f9f6b5c40063165f05ca5b77c4f80ef4fefa46f6eeb62",
+      "bytes": 138231
+    },
+    {
+      "path": "controls/skill-idle.png",
+      "family": "skill",
+      "width": 512,
+      "height": 512,
+      "pivot": {
+        "x": 256,
+        "y": 256
+      },
+      "content": {
+        "x": 56,
+        "y": 56,
+        "width": 400,
+        "height": 400
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 56,
+        "y": 56,
+        "width": 400,
+        "height": 400
+      },
+      "sha256": "e1ce23f2da750d036481fc796331ea016b8780e4547e82d5b868c6b9f60421bc",
+      "bytes": 218468
+    },
+    {
+      "path": "controls/skill-selected.png",
+      "family": "skill",
+      "width": 512,
+      "height": 512,
+      "pivot": {
+        "x": 256,
+        "y": 256
+      },
+      "content": {
+        "x": 56,
+        "y": 56,
+        "width": 400,
+        "height": 400
+      },
+      "alpha": true,
+      "paintedBounds": {
+        "x": 24,
+        "y": 25,
+        "width": 463,
+        "height": 463
+      },
+      "sha256": "19a8d85221fca968df82ce6973950a315d8837e57f24ea763630f8d015c72a89",
+      "bytes": 356278
+    },
+    {
+      "path": "health/hp-fill-red.png",
+      "family": "health",
+      "width": 1024,
+      "height": 96,
+      "pivot": {
+        "x": 32,
+        "y": 48
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 38,
+        "y": 30,
+        "width": 948,
+        "height": 36
+      },
+      "sha256": "f4c8e8617bf5f8590fac52817d864f68ed397157bec2638a34968d4626644e79",
+      "bytes": 1796
+    },
+    {
+      "path": "health/hp-fill-teal.png",
+      "family": "health",
+      "width": 1024,
+      "height": 96,
+      "pivot": {
+        "x": 32,
+        "y": 48
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 38,
+        "y": 30,
+        "width": 948,
+        "height": 36
+      },
+      "sha256": "e9aef5da9a3dd90a5027c9db2023523937620145ecb879f7c605ebd0e78c1121",
+      "bytes": 1803
+    },
+    {
+      "path": "health/hp-track.png",
+      "family": "health",
+      "width": 1024,
+      "height": 96,
+      "pivot": {
+        "x": 32,
+        "y": 48
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 30,
+        "y": 22,
+        "width": 964,
+        "height": 52
+      },
+      "sha256": "7e1bdd7b1b8904dfb385d42925075df266b6b92f9056a970818899af2eea3779",
+      "bytes": 3527
+    },
+    {
+      "path": "icons/cards/attack.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "sha256": "cc1090534bc79bfab4a55a61f84814241cad15644bdf5813083f1bf4ce71d1d2",
+      "bytes": 5798
+    },
+    {
+      "path": "icons/cards/defense.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 47,
+        "y": 32,
+        "width": 163,
+        "height": 192
+      },
+      "sha256": "484131371011d16625ea3d22e1e9ec3f3180b8581b0690d267d7960afbe83335",
+      "bytes": 11963
+    },
+    {
+      "path": "icons/cards/lucky.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 44,
+        "y": 32,
+        "width": 168,
+        "height": 192
+      },
+      "sha256": "f5ec388c6b46015798e8142035a2e4cd8581843032269a5dc78e6acda2265c57",
+      "bytes": 10937
+    },
+    {
+      "path": "icons/cards/skull.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 56,
+        "y": 32,
+        "width": 145,
+        "height": 192
+      },
+      "sha256": "82d8774044b48a4a79c9e5555f6a19fd685dc808cf4bfe78d37966cbb81c42cd",
+      "bytes": 7508
+    },
+    {
+      "path": "icons/cards/star.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "sha256": "bac7b05552fe1f52b85fe91c9602def9f21bc50ddc53b57edb8527de65b51207",
+      "bytes": 6621
+    },
+    {
+      "path": "icons/hud/ap.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "sha256": "7fb25aa2556658ea107e13a714514620dfd42d6c4f1e2c1fbf0ec33bee679608",
+      "bytes": 7019
+    },
+    {
+      "path": "icons/hud/attack.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "sha256": "6c334f7dbe329b432228e461f120bdcf1d004e2f3489f84398d055922835343c",
+      "bytes": 6392
+    },
+    {
+      "path": "icons/hud/bag.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 54,
+        "y": 32,
+        "width": 149,
+        "height": 192
+      },
+      "sha256": "c0a498b8511446adde5cdc1f76c861efbdfce0b476981ee4e410df438139ae14",
+      "bytes": 8983
+    },
+    {
+      "path": "icons/hud/coin.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "sha256": "336d23fc26c195a10be9bb1269e6e4f0a72f51ec0335e78ad9bde79db08b5e5b",
+      "bytes": 18342
+    },
+    {
+      "path": "icons/hud/defense.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 47,
+        "y": 32,
+        "width": 163,
+        "height": 192
+      },
+      "sha256": "d44fb689778b3e3e69149b9a1035155a279cbf079d1eff44b8b0e083d0c6fa04",
+      "bytes": 12407
+    },
+    {
+      "path": "icons/hud/end.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 52,
+        "y": 32,
+        "width": 152,
+        "height": 192
+      },
+      "sha256": "0993005ce92b2c0744552e11a3bfb6bf8758f169bc837337ded6d6222367c735",
+      "bytes": 4567
+    },
+    {
+      "path": "icons/hud/play-disabled.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "sha256": "f46e9d72ee6f22c2c2bc898b7f7368fceca12c75ceb614425475ce43693b0714",
+      "bytes": 5794
+    },
+    {
+      "path": "icons/hud/play.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "sha256": "8edd5c4a6dee86b8e06773630c26d51ebbaa8258bfdf122b199489d23c29d376",
+      "bytes": 5571
+    },
+    {
+      "path": "icons/hud/settings.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 36,
+        "y": 32,
+        "width": 185,
+        "height": 192
+      },
+      "sha256": "1ba25fcb818dff23ad31c19c91b44ddec938568d072e618c0d22b36d9eec11c1",
+      "bytes": 9591
+    },
+    {
+      "path": "icons/skills/attack-disabled.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "sha256": "d70baa3e5e75efe848fd4b3c173fc37a214a94c337407d4e10e4d0a2dd85d60d",
+      "bytes": 5736
+    },
+    {
+      "path": "icons/skills/attack.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "sha256": "6c334f7dbe329b432228e461f120bdcf1d004e2f3489f84398d055922835343c",
+      "bytes": 6392
+    },
+    {
+      "path": "icons/skills/defense-disabled.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 47,
+        "y": 32,
+        "width": 163,
+        "height": 192
+      },
+      "sha256": "a20187be843bc8faa4e0e9af3d99239f916f95f0f15ebb5810bf3dd477954faf",
+      "bytes": 9991
+    },
+    {
+      "path": "icons/skills/defense.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 47,
+        "y": 32,
+        "width": 163,
+        "height": 192
+      },
+      "sha256": "785290226001e2393557c97aa7a636fc49068683970ea1eaf2e191db85365ecd",
+      "bytes": 12592
+    },
+    {
+      "path": "icons/skills/flame-disabled.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 56,
+        "y": 32,
+        "width": 145,
+        "height": 192
+      },
+      "sha256": "2a8fa1a2164db5bef1f44812ac9b08594f240f0fd82b0d9bc66c8e19903d7569",
+      "bytes": 9270
+    },
+    {
+      "path": "icons/skills/flame.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 56,
+        "y": 32,
+        "width": 145,
+        "height": 192
+      },
+      "sha256": "47b6880bb03ace79a601c977a86e3b5cddc0f3d3fe742e23e11c3f043f469cdc",
+      "bytes": 10482
+    },
+    {
+      "path": "icons/skills/heal-disabled.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 42,
+        "width": 192,
+        "height": 173
+      },
+      "sha256": "88c162817395c54c66b6fffcb1ab6a3aa141669171f11b9d4e9af2385a85f286",
+      "bytes": 6386
+    },
+    {
+      "path": "icons/skills/heal.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 42,
+        "width": 192,
+        "height": 173
+      },
+      "sha256": "9809db34fe8de1f8e3d77896c2677edd24fd873410b9d1e9f926ae9d8c82d473",
+      "bytes": 7072
+    },
+    {
+      "path": "icons/skills/star-disabled.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "sha256": "3baef992f98e01d371c16b1ff6e9bae236eb38c5218908a33651d9714a783f49",
+      "bytes": 6440
+    },
+    {
+      "path": "icons/skills/star.png",
+      "family": "icon",
+      "width": 256,
+      "height": 256,
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "content": null,
+      "alpha": true,
+      "paintedBounds": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "sha256": "7fb25aa2556658ea107e13a714514620dfd42d6c4f1e2c1fbf0ec33bee679608",
+      "bytes": 7019
+    }
+  ]
+}

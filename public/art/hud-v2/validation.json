@@ -1,0 +1,112 @@
+{
+  "passed": true,
+  "productionPNGs": 43,
+  "allCanvasesMatch": true,
+  "allTransparentAssetEdgesClear": true,
+  "stateChecks": [
+    {
+      "test": "selected preserves all master-face RGBA pixels",
+      "normal": "cards/card-idle.png",
+      "selected": "cards/card-selected.png",
+      "comparedPixels": 1323946,
+      "changedPixels": 0,
+      "haloPixels": 177005,
+      "passed": true
+    },
+    {
+      "test": "selected preserves all master-face RGBA pixels",
+      "normal": "controls/skill-idle.png",
+      "selected": "controls/skill-selected.png",
+      "comparedPixels": 126643,
+      "changedPixels": 0,
+      "haloPixels": 46215,
+      "passed": true
+    },
+    {
+      "test": "state preserves master alpha silhouette",
+      "normal": "controls/skill-idle.png",
+      "state": "controls/skill-disabled.png",
+      "changedAlphaPixels": 0,
+      "changedColorPixels": 125040,
+      "passed": true
+    },
+    {
+      "test": "state preserves master alpha silhouette",
+      "normal": "controls/action-primary-idle.png",
+      "state": "controls/action-primary-pressed.png",
+      "changedAlphaPixels": 0,
+      "changedColorPixels": 192382,
+      "passed": true
+    },
+    {
+      "test": "state preserves master alpha silhouette",
+      "normal": "controls/action-primary-idle.png",
+      "state": "controls/action-primary-disabled.png",
+      "changedAlphaPixels": 0,
+      "changedColorPixels": 192378,
+      "passed": true
+    },
+    {
+      "test": "state preserves master alpha silhouette",
+      "normal": "controls/action-primary-idle.png",
+      "state": "controls/action-secondary-idle.png",
+      "changedAlphaPixels": 0,
+      "changedColorPixels": 192416,
+      "passed": true
+    },
+    {
+      "test": "state preserves master alpha silhouette",
+      "normal": "controls/action-primary-idle.png",
+      "state": "controls/action-secondary-pressed.png",
+      "changedAlphaPixels": 0,
+      "changedColorPixels": 192522,
+      "passed": true
+    },
+    {
+      "test": "state preserves master alpha silhouette",
+      "normal": "controls/action-primary-idle.png",
+      "state": "controls/action-secondary-disabled.png",
+      "changedAlphaPixels": 0,
+      "changedColorPixels": 192535,
+      "passed": true
+    }
+  ],
+  "swordChecks": [
+    {
+      "path": "icons/cards/attack.png",
+      "opaqueComponents": 1,
+      "sharedAlpha": true,
+      "passed": true
+    },
+    {
+      "path": "icons/skills/attack.png",
+      "opaqueComponents": 1,
+      "sharedAlpha": true,
+      "passed": true
+    },
+    {
+      "path": "icons/skills/attack-disabled.png",
+      "opaqueComponents": 1,
+      "sharedAlpha": true,
+      "passed": true
+    },
+    {
+      "path": "icons/hud/attack.png",
+      "opaqueComponents": 1,
+      "sharedAlpha": true,
+      "passed": true
+    },
+    {
+      "path": "icons/hud/play.png",
+      "opaqueComponents": 1,
+      "sharedAlpha": true,
+      "passed": true
+    },
+    {
+      "path": "icons/hud/play-disabled.png",
+      "opaqueComponents": 1,
+      "sharedAlpha": true,
+      "passed": true
+    }
+  ]
+}
