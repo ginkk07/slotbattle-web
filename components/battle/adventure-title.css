@@ -1,38 +1,25 @@
 /* A single 450 x 800 title composition, scaled together with the game. */
 .title-screen { position: absolute; inset: 0; width: 450px; height: 800px; isolation: isolate; overflow: hidden; color: #f5ead0; background: #0d180f; font-family: "Noto Serif TC", "Songti TC", "PMingLiU", Georgia, serif; }
-.title-scenery { position: absolute; inset: 0; z-index: -2; background: linear-gradient(180deg, #09170c70, #0a170c10 25%, #07110920 50%, #08140ae6 70%, #07110afa), var(--battle-background) center / 450px 800px no-repeat; }
-.title-scenery::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 100px 24px #030a0666; }
-.title-frame { position: absolute; inset: 18px; z-index: -1; border: 1px solid #e1c89148; pointer-events: none; }
-.title-frame::before, .title-frame::after { content: ""; position: absolute; width: 46px; height: 46px; border-color: #e1c891; border-style: solid; }
-.title-frame::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
-.title-frame::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
-.title-masthead { position: absolute; top: 68px; left: 0; right: 0; text-align: center; text-shadow: 0 3px 12px #020b05, 0 1px #34260e; }
-.title-chapter { font-size: 11px; letter-spacing: .35em; color: #e0cfaa; }
-.title-masthead h2 { margin: 12px 0 0; font-family: Georgia, "Times New Roman", serif; line-height: 1; }
+.title-scenery { position: absolute; inset: 0; z-index: -2; background: linear-gradient(180deg, #07142155, transparent 26%, transparent 62%, #07101844 82%, #0710187a), var(--title-background) center / 450px 800px no-repeat; }
+.title-scenery::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 56px 12px #04101338; }
+.title-masthead { position: absolute; top: 54px; left: 0; right: 0; text-align: center; text-shadow: 0 3px 12px #020b05, 0 1px #34260e; }
+.title-masthead h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; line-height: 1; }
 .title-masthead h2 > span { display: block; font-size: 25px; letter-spacing: .34em; padding-left: .34em; color: #f5e3bb; }
-.title-masthead h2 > strong { display: block; margin-top: 4px; font-size: 70px; font-weight: 700; letter-spacing: .035em; color: #f0d091; text-shadow: 0 2px #6b5129, 0 5px 16px #000; }
-.title-name { margin-top: 13px; font-size: 17px; letter-spacing: .45em; padding-left: .45em; }
-.title-divider { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 12px; font-size: 9px; color: #d2b675; }
+.title-masthead h2 > strong { display: block; margin-top: 4px; font-size: 66px; font-weight: 700; letter-spacing: .035em; color: #f0d091; -webkit-text-stroke: .5px #6b5129; text-shadow: 0 2px #6b5129, 0 5px 16px #000; }
+.title-name { margin-top: 8px; font-size: 15px; letter-spacing: .45em; padding-left: .45em; }
+.title-divider { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 8px; font-size: 9px; color: #d2b675; }
 .title-divider > span { width: 58px; height: 1px; background: linear-gradient(90deg, transparent, #d2b675); }
 .title-divider > span:last-child { transform: rotate(180deg); }
-.title-party { position: absolute; top: 257px; left: 0; right: 0; height: 252px; pointer-events: none; }
-.title-knight { position: absolute; left: 31px; top: 0; width: 245px; height: 245px; object-fit: contain; filter: drop-shadow(0 12px 10px #020b04aa); }
-.title-enemy { position: absolute; right: 14px; top: 26px; width: 192px; height: 192px; object-fit: contain; filter: brightness(.79) drop-shadow(0 10px 8px #020b04aa); }
-.title-ground { position: absolute; left: 54px; right: 30px; top: 204px; height: 27px; background: radial-gradient(ellipse, #d8c08338, #020b0555 47%, transparent 70%); }
-.title-card-emblem { position: absolute; left: 267px; top: 156px; display: flex; gap: 0; }
-.title-card-emblem > span { position: relative; width: 39px; height: 69.333px; margin-left: -8px; }
-.title-card-emblem > span:first-child { transform: rotate(-16deg) translateY(4px); }
-.title-card-emblem > span:last-child { transform: rotate(16deg) translateY(4px); }
-.title-card-emblem .emblem-card { position: absolute; inset: -8.3333% -9.2593%; width: 118.5185%; height: 116.6667%; max-width: none; }
-.title-card-emblem .emblem-symbol { position: absolute; left: 10%; top: 28%; width: 80%; height: 44%; object-fit: contain; }
-.title-menu { position: absolute; top: 508px; left: 58px; right: 58px; display: grid; grid-template-rows: 54px 20px 46px 46px; gap: 12px; }
+.title-menu { position: absolute; top: 586px; left: 58px; right: 58px; display: grid; grid-template-rows: 54px 20px 44px; gap: 10px; }
+.title-submenu { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .title-screen .title-menu button, .title-screen .title-modal-actions button { display: flex; align-items: center; justify-content: center; gap: 20px; width: 100%; height: 48px; min-height: 48px; padding: 8px 18px; border: 0; border-radius: 999px; background: var(--action-secondary-idle) center / 114.2857% 157.1429% no-repeat; box-shadow: none; color: #f4e7c9; font: 600 16px/1.2 "Noto Serif TC", "PMingLiU", Georgia, serif; letter-spacing: .16em; transition: filter .12s ease-out; }
 .title-screen .title-menu button.primary, .title-screen .title-modal-actions button.primary { background-image: var(--action-primary-idle); color: #3d3320; }
 .title-screen .title-menu button.title-start { height: 54px; font-size: 20px; }
-.title-screen .title-menu button.title-option { height: 46px; min-height: 46px; }
+.title-screen .title-submenu button.title-option { height: 44px; min-height: 44px; padding: 6px; border: 0; border-radius: 4px; background: transparent; color: #e5dcc6; font-size: 14px; letter-spacing: .08em; text-shadow: 0 1px 4px #000; }
 .title-screen .title-menu button:not(:disabled):hover, .title-screen .title-modal-actions button:not(:disabled):hover { background-color: transparent; filter: brightness(1.1); }
 .title-screen .title-menu button:not(:disabled):active, .title-screen .title-modal-actions button:not(:disabled):active { transform: none; background-image: var(--action-secondary-pressed); }
 .title-screen .title-menu button.primary:not(:disabled):active, .title-screen .title-modal-actions button.primary:not(:disabled):active { background-image: var(--action-primary-pressed); }
+.title-screen .title-submenu button.title-option:not(:disabled):is(:hover, :active) { background: transparent; color: #ffe4a9; }
 .title-screen button:focus-visible { outline: 2px solid #f6df9f; outline-offset: 3px; }
 .title-loadout { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 11px; color: #c8bfa4; letter-spacing: .06em; }
 .title-loadout > span { color: #b5a377; }
@@ -41,12 +28,6 @@
 .title-footer p { font-size: 10px; letter-spacing: .16em; }
 .title-screen .title-footer button { min-height: 32px; padding: 0 4px; border: 0; color: #bdb295; background: transparent; font-size: 11px; }
 .title-screen .title-footer button:hover { color: #f0dcaa; background: transparent; }
-.title-mote { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #ffdea6; box-shadow: 0 0 12px 3px #f4c86e6b; opacity: .5; animation: title-mote-drift 5s ease-in-out infinite alternate; }
-.mote-one { left: 56px; top: 234px; }
-.mote-two { right: 77px; top: 314px; animation-delay: -2s; }
-.mote-three { left: 114px; top: 468px; animation-delay: -3s; }
-.mote-four { right: 108px; top: 443px; animation-delay: -1s; }
-@keyframes title-mote-drift { from { opacity: .15; transform: translateY(7px); } to { opacity: .7; transform: translateY(-10px); } }
 
 .title-screen .title-modal { border: 1px solid #cbb47a; background: #152118; color: #f4ead2; border-radius: 12px; }
 .title-screen .title-modal .modal-heading { border-color: #cbb47a4d; }
@@ -77,4 +58,4 @@
 .guide-number { font: 14px/24px Georgia, serif; color: #c9b476; }
 .title-guide h3 { font-size: 15px; margin-bottom: 6px; }
 .title-guide p { font-size: 12px; line-height: 1.75; color: #d4c9ad; }
-@media (prefers-reduced-motion: reduce) { .title-mote { animation: none; } .title-screen button { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .title-screen button { transition: none; } }

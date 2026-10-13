@@ -20,16 +20,16 @@ export const battleArt = {
   columns: 4,
   rows: 2,
 };
+export const titleArt = { background: `${artBase}title/ruins-gateway-v2.png` };
 export const hudArt = {
   icons: Object.fromEntries(["ap", "attack", "bag", "coin", "defense", "end", "play", "play-disabled", "settings"].map((name) => [name, `${hudBase}icons/hud/${name}.png`])) as Record<string, string>,
   skills: Object.fromEntries(["attack", "defense", "flame", "heal", "star"].flatMap((name) => [name, `${name}-disabled`]).map((name) => [name, `${hudBase}icons/skills/${name}.png`])) as Record<string, string>,
   health: { track: `${hudBase}health/hp-track.png`, player: `${hudBase}health/hp-fill-teal.png`, enemy: `${hudBase}health/hp-fill-red.png` },
 };
 /** Resolve asset URLs through Vite's base so both local and GitHub Pages work. */
-export const hudTheme = {
-  "--battle-background": `url("${battleArt.background}")`,
-  ...Object.fromEntries(["skill-idle", "skill-selected", "skill-disabled", "action-primary-idle", "action-primary-pressed", "action-primary-disabled", "action-secondary-idle", "action-secondary-pressed", "action-secondary-disabled"].map((name) => [`--${name}`, `url("${hudBase}controls/${name}.png")`])),
-};
+const controlTheme = Object.fromEntries(["skill-idle", "skill-selected", "skill-disabled", "action-primary-idle", "action-primary-pressed", "action-primary-disabled", "action-secondary-idle", "action-secondary-pressed", "action-secondary-disabled"].map((name) => [`--${name}`, `url("${hudBase}controls/${name}.png")`]));
+export const hudTheme = { "--battle-background": `url("${battleArt.background}")`, ...controlTheme };
+export const titleTheme = { "--title-background": `url("${titleArt.background}")`, ...controlTheme };
 export const hudStatePreloads = ["skill-selected", "skill-disabled", "action-primary-pressed", "action-primary-disabled", "action-secondary-pressed", "action-secondary-disabled"].map((name) => `${hudBase}controls/${name}.png`);
 export type CharacterArt = { cell: number; filter?: string; scale?: number; src?: string };
 export const characterArt: Record<string, CharacterArt> = {

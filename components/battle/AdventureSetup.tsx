@@ -3,7 +3,7 @@ import type { Catalog } from "../../game/model.ts";
 import type { AdventureRules, AdventureSetup as Settings } from "../../game/adventure/model.ts";
 import { Modal } from "../ui/Modal.tsx";
 import { BattleIcon, conditionLabel, skillIcon, type BattleIconName } from "./BattleIcon.tsx";
-import { cardArt, characterArt, hudTheme } from "./presentation.ts";
+import { titleArt, titleTheme } from "./presentation.ts";
 import "./adventure-title.css";
 
 export function AdventureSetup({ catalog, rules, onStart, onSandbox }: { catalog: Catalog; rules: AdventureRules; onStart: (setup: Settings) => void; onSandbox: () => void }) {
@@ -13,21 +13,14 @@ export function AdventureSetup({ catalog, rules, onStart, onSandbox }: { catalog
   function select(ids: string[], id: string, limit: number): string[] { return ids.includes(id) ? ids.filter((entry) => entry !== id) : limit === 1 ? [id] : ids.length < limit ? [...ids, id] : ids; }
   const equipmentIcon = (id: string): BattleIconName => id === "lucky-clover" ? "lucky" : id === "shuriken" ? "star" : "attack";
 
-  return <section className="title-screen" aria-label="遊戲標題畫面" style={hudTheme as CSSProperties}>
-    <div className="title-scenery" aria-hidden="true"><span className="title-mote mote-one" /><span className="title-mote mote-two" /><span className="title-mote mote-three" /><span className="title-mote mote-four" /></div>
-    <div className="title-frame" aria-hidden="true" />
-    <header className="title-masthead"><p className="title-chapter">遺跡冒險</p><h2 aria-label="SLOT BATTLE 拉霸戰鬥"><span>SLOT</span><strong>BATTLE</strong></h2><p className="title-name">拉霸戰鬥</p><div className="title-divider" aria-hidden="true"><span />◆<span /></div></header>
-    <div className="title-party" aria-hidden="true">
-      <div className="title-ground" />
-      <img className="title-enemy" src={characterArt["ruins-sentinel"].src} alt="" draggable={false} />
-      <img className="title-knight" src={characterArt.player.src} alt="" draggable={false} />
-      <div className="title-card-emblem">{(["attack", "defense", "star"] as const).map((symbol) => <span key={symbol}><img className="emblem-card" src={cardArt.base} alt="" draggable={false} /><img className="emblem-symbol" src={cardArt.symbols[symbol]} alt="" draggable={false} /></span>)}</div>
-    </div>
+  return <section className="title-screen" aria-label="遊戲標題畫面" style={titleTheme as CSSProperties}>
+    <link rel="preload" as="image" href={titleArt.background} />
+    <div className="title-scenery" aria-hidden="true" />
+    <header className="title-masthead"><h2 aria-label="SLOT BATTLE 拉霸戰鬥"><span>SLOT</span><strong>BATTLE</strong></h2><p className="title-name">拉霸戰鬥</p><div className="title-divider" aria-hidden="true"><span />◆<span /></div></header>
     <nav className="title-menu" aria-label="遊戲主選單">
       <button type="button" className="primary title-start" onClick={() => onStart({ seed: Date.now() >>> 0, skills, equipment })}><span className="menu-diamond" aria-hidden="true">◆</span>開始冒險<span className="menu-diamond" aria-hidden="true">◆</span></button>
       <p className="title-loadout">{skills.length ? skills.map((id) => catalog.skills[id].name).join("、") : "未攜帶技能"}<span>·</span>{equipment.length ? equipment.map((id) => catalog.equipment[id].name).join("、") : "未攜帶裝備"}</p>
-      <button type="button" className="title-option" onClick={() => setMenu("preparation")}>出發準備</button>
-      <button type="button" className="title-option" onClick={() => setMenu("guide")}>遊戲說明</button>
+      <div className="title-submenu"><button type="button" className="title-option" onClick={() => setMenu("preparation")}>出發準備</button><button type="button" className="title-option" onClick={() => setMenu("guide")}>遊戲說明</button></div>
     </nav>
     <footer className="title-footer"><p>3 × 3 卡片戰鬥</p><button type="button" className="quiet" onClick={onSandbox}>戰鬥測試</button></footer>
 
