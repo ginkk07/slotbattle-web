@@ -19,10 +19,9 @@ export function AdventureSetup({ catalog, rules, onStart, onSandbox }: { catalog
     <header className="title-masthead"><h2 aria-label="SLOT BATTLE 拉霸戰鬥"><span>SLOT</span><strong>BATTLE</strong></h2><p className="title-name">拉霸戰鬥</p><div className="title-divider" aria-hidden="true"><span />◆<span /></div></header>
     <nav className="title-menu" aria-label="遊戲主選單">
       <button type="button" className="primary title-start" onClick={() => onStart({ seed: Date.now() >>> 0, skills, equipment })}><span className="menu-diamond" aria-hidden="true">◆</span>開始冒險<span className="menu-diamond" aria-hidden="true">◆</span></button>
-      <p className="title-loadout">{skills.length ? skills.map((id) => catalog.skills[id].name).join("、") : "未攜帶技能"}<span>·</span>{equipment.length ? equipment.map((id) => catalog.equipment[id].name).join("、") : "未攜帶裝備"}</p>
       <div className="title-submenu"><button type="button" className="title-option" onClick={() => setMenu("preparation")}>出發準備</button><button type="button" className="title-option" onClick={() => setMenu("guide")}>遊戲說明</button></div>
     </nav>
-    <footer className="title-footer"><p>3 × 3 卡片戰鬥</p><button type="button" className="quiet" onClick={onSandbox}>戰鬥測試</button></footer>
+    <footer className="title-footer"><button type="button" className="quiet" onClick={onSandbox}>戰鬥測試</button></footer>
 
     <Modal open={menu === "preparation"} title="出發準備" eyebrow="選擇你的起始技能與裝備" onClose={() => setMenu(null)} className="title-modal preparation-modal">
       <div className="title-modal-body">
