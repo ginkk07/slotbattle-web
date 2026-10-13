@@ -8,7 +8,7 @@ import { createServer } from "vite";
 import react from "@vitejs/plugin-react";
 
 let server;
-let Hand, SlotBoard, BattleView, Arena, BattleIcon, conditionLabel, skillIcon, gameViewportScale, GAME_WIDTH, GAME_HEIGHT, catalog, createBattle;
+let Hand, SlotBoard, BattleView, Arena, BattleIcon, conditionLabel, skillIcon, gameViewportScale, GAME_WIDTH, GAME_HEIGHT, catalog, createBattle, setPlaybackBusy;
 before(async () => {
   // Transform the actual TSX with the existing Vite toolchain; no browser or
   // Cloudflare runtime is needed for these rendering/availability regressions.
@@ -18,7 +18,19 @@ before(async () => {
     envFile: false,
     appType: "custom",
     logLevel: "error",
-    plugins: [react()],
+    plugins: [{
+      name: "playback-render-fixture", enforce: "pre",
+      transform(code, id) {
+        if (!id.replaceAll("\\", "/").endsWith("/components/battle/useBattlePlayback.ts")) return;
+        return code.replace("export function useBattlePlayback(", "function actualBattlePlayback(") + `
+          let fixtureBusy = false;
+          export function setPlaybackBusy(value) { fixtureBusy = value; }
+          export function useBattlePlayback(state) {
+            return fixtureBusy ? { scene: state, hit: { label: "盾牌投擲" }, group: [], busy: true } : actualBattlePlayback(state);
+          }
+        `;
+      },
+    }, react()],
     // Keep React in Node's module cache for the renderer and transformed TSX,
     // including Windows installs that use package-manager symlinks.
     ssr: { external: ["react", "react/jsx-runtime", "react/jsx-dev-runtime", "react-dom"] },
@@ -27,6 +39,7 @@ before(async () => {
   ({ Hand } = await server.ssrLoadModule("/components/battle/Hand.tsx"));
   ({ SlotBoard } = await server.ssrLoadModule("/components/battle/SlotBoard.tsx"));
   ({ BattleView } = await server.ssrLoadModule("/components/battle/BattleView.tsx"));
+  ({ setPlaybackBusy } = await server.ssrLoadModule("/components/battle/useBattlePlayback.ts"));
   ({ Arena } = await server.ssrLoadModule("/components/battle/Arena.tsx"));
   ({ gameViewportScale, GAME_WIDTH, GAME_HEIGHT } = await server.ssrLoadModule("/components/ui/GameViewport.tsx"));
   ({ BattleIcon, conditionLabel, skillIcon } = await server.ssrLoadModule("/components/battle/BattleIcon.tsx"));
@@ -239,4 +252,41 @@ test("HUD CSS uses fixed coordinates with internal scrolling and reduced motion"
   assert.match(css, /overflow-x: auto/u);
   assert.doesNotMatch(css, /\b(?:dvh|svh|vh|vw|cqh)\b|@media\s*\((?:max|min)-(?:width|height)/u);
   assert.match(css, /prefers-reduced-motion/u);
+});
+
+test("a damage playback keeps the hand and both actions visible, but disables input", () => {
+  // Exercise the real view in the transient playback state, which static idle
+  // rendering cannot reach because React effects do not run in the SSR renderer.
+  setPlaybackBusy(true);
+  try {
+    const state = battle();
+    state.phase = "cards";
+    state.hand = [card("first", ["defense", "defense", "attack"]), card("second", ["attack", "star", "star"])];
+    const html = render(BattleView, battleProps(state));
+    assert.match(html, /aria-busy="true"/u);
+    assert.match(html, /選擇手牌/u);
+    assert.match(buttonWith(html, "橫線 first"), /disabled=""/u);
+    assert.match(buttonWith(html, "橫線 second"), /disabled=""/u);
+    assert.match(buttonWith(html, "結束回合"), /disabled=""/u);
+    assert.match(buttonWith(html, "出牌"), /disabled=""/u);
+    assert.match(html, /效果結算中/u);
+    assert.doesNotMatch(html, /class="battle-result"/u);
+  } finally {
+    setPlaybackBusy(false);
+  }
+});
+
+test("idle and retention keep the same guidance slot before the hand", () => {
+  const state = battle();
+  state.phase = "cards";
+  state.hand = [card("first", ["attack", "defense", "star"])];
+  const idle = render(BattleView, battleProps(state));
+  state.phase = "retain";
+  const retained = render(BattleView, battleProps(state));
+  for (const html of [idle, retained]) {
+    assert.equal((html.match(/class="decision-information"/gu) ?? []).length, 1);
+    assert.ok(html.indexOf('class="decision-information"') < html.indexOf('class="hand-grid"'));
+  }
+  assert.match(idle, /選擇你的卡片/u);
+  assert.match(retained, /每張保留卡花費/u);
 });

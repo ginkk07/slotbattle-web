@@ -2,7 +2,7 @@
 html, body { min-width: 0; height: 100%; overflow: hidden; }
 .game-viewport { position: fixed; inset: 0; display: grid; place-items: center; overflow: hidden; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); background: #080f0b; }
 .game-frame { position: relative; flex-shrink: 0; }
-.game-canvas { position: absolute; left: 0; top: 0; width: 450px; height: 800px; transform: scale(var(--game-scale)); transform-origin: top left; overflow: hidden; }
+.game-canvas { position: absolute; left: 0; top: 0; width: 450px; height: 800px; zoom: var(--game-scale); overflow: hidden; image-rendering: auto; }
 .game-canvas .site-shell { width: 450px; height: 800px; min-height: 0; max-height: none; margin: 0; border: 0; overflow: hidden; }
 .game-canvas .topbar { height: 48px; padding: 5px 16px; flex-shrink: 0; }
 .game-canvas .run-progress { min-height: 28px; flex-shrink: 0; }
@@ -23,6 +23,6 @@ html, body { min-width: 0; height: 100%; overflow: hidden; }
 .game-canvas :is(.opening-loadout, .preparation-view, .adventure-view, .battle-controls) { scrollbar-width: none; }
 
 /* Native dialogs are in the browser top layer: apply the same scale directly. */
-.game-canvas .game-modal { position: fixed; inset: auto; left: 50%; top: 50%; width: 410px; max-width: none; max-height: 740px; margin: 0; transform: translate(-50%, -50%) scale(var(--game-scale)); transform-origin: center; }
+.game-canvas .game-modal { position: fixed; inset: auto; left: 50%; top: 50%; width: 410px; max-width: none; max-height: 740px; margin: 0; transform: translate(-50%, -50%); transform-origin: center; }
 .game-canvas .game-modal[open] { animation: game-dialog-appear .16s ease-out; }
 @keyframes game-dialog-appear { from { opacity: 0; } to { opacity: 1; } }
